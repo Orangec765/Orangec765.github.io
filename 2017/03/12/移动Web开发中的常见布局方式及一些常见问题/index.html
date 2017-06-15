@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>常见布局 | 夏至未至</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="目前针对web前端页面的设计主要分为pc端和移动端页面，针对不同的页面我们可能会采取不同的布局格式，在整个布局的选择上，没有一成不变的，也没有任何一种布局能够满足各个方面的需要，在众多的布局方式中，我这边主要针对以下几种布局方式简单的发表一下个人的看法。">
+<meta name="keywords" content="移动端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见布局">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/index.html">
+<meta property="og:site_name" content="夏至未至">
+<meta property="og:description" content="目前针对web前端页面的设计主要分为pc端和移动端页面，针对不同的页面我们可能会采取不同的布局格式，在整个布局的选择上，没有一成不变的，也没有任何一种布局能够满足各个方面的需要，在众多的布局方式中，我这边主要针对以下几种布局方式简单的发表一下个人的看法。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4482400-2b608551fead622a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4482400-8c5716e275322263.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4482400-f56df7bfbe811978.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4482400-66a102b49c8b3e35.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-06-15T04:09:45.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见布局">
+<meta name="twitter:description" content="目前针对web前端页面的设计主要分为pc端和移动端页面，针对不同的页面我们可能会采取不同的布局格式，在整个布局的选择上，没有一成不变的，也没有任何一种布局能够满足各个方面的需要，在众多的布局方式中，我这边主要针对以下几种布局方式简单的发表一下个人的看法。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/4482400-2b608551fead622a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="夏至未至" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/header.jpg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CC</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder=" Search...">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/开发工具/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/CSS3/" style="font-size: 10px;">CSS3</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/移动端/" style="font-size: 10px;">移动端</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CC</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/header.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CC</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/开发工具/">玩转开发工具</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-移动Web开发中的常见布局方式及一些常见问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/" class="article-date">
+      <time datetime="2017-03-12T09:47:49.000Z" itemprop="datePublished">2017-03-12</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      常见布局
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动端/">移动端</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>目前针对web前端页面的设计主要分为pc端和移动端页面，针对不同的页面我们可能会采取不同的布局格式，在整个布局的选择上，没有一成不变的，也没有任何一种布局能够满足各个方面的需要，在众多的布局方式中，我这边主要针对以下几种布局方式简单的发表一下个人的看法。</p>
+<a id="more"></a>
+<h2 id="一、流式布局"><a href="#一、流式布局" class="headerlink" title="一、流式布局"></a>一、流式布局</h2><h3 id="1-1-什么是流式布局"><a href="#1-1-什么是流式布局" class="headerlink" title="1.1 什么是流式布局"></a>1.1 什么是流式布局</h3><blockquote>
+<p>流式布局就是百分比布局，通过盒子的宽度设置成百分比来根据屏幕的宽度来进行伸缩，不受固定像素的限制，内容向两侧填充，同时会设定最小宽度和最大宽度，适用于图片比较多的首页、门户、电商等。</p>
+</blockquote>
+<p>在这里我们以京东的M站为例进行说明：</p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/4482400-2b608551fead622a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br><div class="image-caption">top.png</div>
+
+<p></p></div><p></p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/4482400-8c5716e275322263.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br><div class="image-caption">nav.png</div>
+
+<p></p></div><p></p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/4482400-f56df7bfbe811978.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br><div class="image-caption">navs.png</div>
+
+<p></p></div><p></p>
+<p>可以看到，在京东各个模块的主容器中，都设置了最大最小宽度和宽度100%，而在导航区块中，由于一行有5个小区块，所以设置了宽度为20%，使得小区块也能达到自适应的效果。</p>
+<h3 id="1-2-viewport"><a href="#1-2-viewport" class="headerlink" title="1.2 viewport"></a>1.2 viewport</h3><blockquote>
+<p>在移动端用来承载网页的这个区域就是我们的视觉窗口<code>viewport</code>，这个区域可以设置高度宽度，可以按比例放大缩小，而且能设置是否允许用户自行缩放。</p>
+</blockquote>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/4482400-66a102b49c8b3e35.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><br><div class="image-caption">viewport.jpg</div>
+
+<p></p></div><p></p>
+<ul>
+<li><strong>width</strong>：设置的是<code>viewport</code>宽度，可以设置<code>device-width</code>特殊值。</li>
+<li><strong>initial-scale</strong>：初始缩放比，大于0的数字，一般设置为1.0。</li>
+<li><strong>maximum-scale</strong>：最大缩放比，大于0的数字。</li>
+<li><strong>minimum-scale</strong>：最小缩放比，大于0的数字。</li>
+<li><p><strong>user-scalable</strong>：用户是否可以缩放，yes或no（1或0）。</p>
+<!--视口标签通可以使用 meta:vp + tab 来快速生成，通常我们可以设置为下边这样。-->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+
+</li>
+</ul>
+<h3 id="1-3-移动端常见事件"><a href="#1-3-移动端常见事件" class="headerlink" title="1.3 移动端常见事件"></a>1.3 移动端常见事件</h3><h4 id="1-3-1-touch事件"><a href="#1-3-1-touch事件" class="headerlink" title="1.3.1 touch事件"></a>1.3.1 touch事件</h4><ul>
+<li><strong>touchstart</strong>：当手指触碰屏幕时候发生。不管当前有多少只手指。</li>
+<li><strong>touchmove</strong>：当手指在屏幕上滑动时连续触发。通常我们再滑屏页面，会调用<code>event</code>的<code>preventDefault()</code>可以阻止默认情况的发生：阻止页面滚动。</li>
+<li><strong>touchend</strong>：当手指离开屏幕时触发。</li>
+<li><strong>touchcancel</strong>：系统停止跟踪触摸时候会触发。例如在触摸过程中突然页面<code>alert()</code>一个提示框，此时会触发该事件，这个事件比较少用。</li>
+</ul>
+<blockquote>
+<p>触摸事件的响应顺序：</p>
+<p>ontouchstart –&gt; ontouchmove –&gt; ontouchend –&gt; onclick(300ms延时)。</p>
+</blockquote>
+<h4 id="1-3-2-event事件"><a href="#1-3-2-event事件" class="headerlink" title="1.3.2 event事件"></a>1.3.2 event事件</h4><ul>
+<li><strong>originalEvent</strong>：（原生事件）是<code>jquery</code>封装的事件。</li>
+<li><strong>targetTouches</strong>：目标元素的所有当前触摸。</li>
+<li><strong>changedTouches</strong>：页面上最新更改的所有触摸。</li>
+<li><strong>touches</strong>：页面上的所有触摸。注意：在<code>touchend</code>事件的时候<code>event</code>只会记录<code>changedtouches</code>。</li>
+</ul>
+<h2 id="二、响应式开发"><a href="#二、响应式开发" class="headerlink" title="二、响应式开发"></a>二、响应式开发</h2><h3 id="2-1-响应式开发简介"><a href="#2-1-响应式开发简介" class="headerlink" title="2.1 响应式开发简介"></a>2.1 响应式开发简介</h3><h4 id="2-1-1-什么是响应式开发"><a href="#2-1-1-什么是响应式开发" class="headerlink" title="2.1.1 什么是响应式开发"></a>2.1.1 什么是响应式开发</h4><blockquote>
+<p>在移动互联日益成熟的时候，我们在桌面浏览器上开发的网页已经无法满足移动设备的阅读。</p>
+<p>通常的做法是针对移动端单独做一套特定的版本。</p>
+<p>但是如果终端越来越多那么你需要开发的版本就会越来越多（大屏移动设备普及）。</p>
+<p>那么<code>Ethan Marcotte</code>在2010年5月份提出的一个概念，简而言之，就是一个网站能够兼容多个终端。</p>
+</blockquote>
+<h4 id="2-1-2-响应式开发的前景"><a href="#2-1-2-响应式开发的前景" class="headerlink" title="2.1.2 响应式开发的前景"></a>2.1.2 响应式开发的前景</h4><blockquote>
+<p>现在的移动设备屏幕越来越大。</p>
+<p>越来越多的设计师也采用了这种设计。</p>
+<p>在新建站的一些网站现在普遍采用的响应式开发。</p>
+<p>那么在前端开发当中也是一项必备的技能。</p>
+</blockquote>
+<h4 id="2-1-3-响应式开发的原理"><a href="#2-1-3-响应式开发的原理" class="headerlink" title="2.1.3 响应式开发的原理"></a>2.1.3 响应式开发的原理</h4><blockquote>
+<p>CSS3中的<code>Media Query</code>（媒介查询），通过查询<code>screen</code>的宽度来指定某个宽度区间的网页布局。</p>
+</blockquote>
+<ul>
+<li>超小屏幕：768px以下（移动设备）。</li>
+<li>小屏设备：768px-992px。</li>
+<li>中等屏幕：992px-1200px。</li>
+<li>宽屏设备：1200px以上。</li>
+</ul>
+<h3 id="2-2-Bootstrap框架"><a href="#2-2-Bootstrap框架" class="headerlink" title="2.2 Bootstrap框架"></a>2.2 Bootstrap框架</h3><h4 id="2-2-1-Bootstrap简介"><a href="#2-2-1-Bootstrap简介" class="headerlink" title="2.2.1 Bootstrap简介"></a>2.2.1 Bootstrap简介</h4><ul>
+<li><a href="http://getbootstrap.com" target="_blank" rel="external">官方网站</a></li>
+<li><a href="http://www.bootcss.com/" target="_blank" rel="external">Bootstrap中文网</a></li>
+<li>它是由<code>Twitter</code>的设计师<code>Mark Otto</code>和<code>Jacob Thornton</code>合作开发，是一个<code>CSS/HTML</code>框架。它提供了优雅的<code>HTML</code>和<code>CSS</code>规范，它即是由动态<code>CSS</code>语言<code>Less</code>写成。</li>
+<li><code>Bootstrap</code>是基于<code>HTML5</code>和<code>CSS3</code>开发的，它在<code>jQuery</code>的基础上进行了更为个性化和人性化的完善，形成一套自己独有的网站风格，并兼容大部分<code>jQuery</code>插件。</li>
+<li><code>Bootstrap</code>中包含了丰富的<code>Web</code>组件，根据这些组件，可以快速的搭建一个漂亮、功能完备的网站。其中包括以下组件：下拉菜单、按钮组、按钮下拉菜单、导航、导航条、路径导航、分页、排版、缩略图、警告对话框、进度条、媒体对象等。</li>
+</ul>
+<h4 id="2-2-2-Bootstrap常用样式"><a href="#2-2-2-Bootstrap常用样式" class="headerlink" title="2.2.2 Bootstrap常用样式"></a>2.2.2 Bootstrap常用样式</h4><ul>
+<li><p><strong>container类</strong>：用于定义一个固定宽度且居中的版心。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;div class=<span class="string">"topbar"</span>&gt;</div><div class="line">  &lt;div class=<span class="string">"container"</span>&gt;</div><div class="line">    &lt;!--</div><div class="line">      此处的代码会显示在一个固定宽度且居中的容器中</div><div class="line">      该容器的宽度会跟随屏幕的变化而变化</div><div class="line">    --&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>栅格系统</strong>：<code>Bootstrap</code>中定义了一套响应式的网格系统，其使用方式就是将一个容器划分成12列，然后通过<code>col-xx-xx</code>的类名控制每一列的占比。</p>
+<ol>
+<li><p><strong>row类</strong>：</p>
+<ul>
+<li>因为每一个列默认有一个15px的左右外边距。</li>
+<li><p><code>row</code>类的一个作用就是通过左右-15px屏蔽掉这个边距。</p>
+<div class="container"><br>  <div class="row"></div><br></div>
+</li>
+</ul>
+</li>
+<li><p><strong>col-xx-x类</strong>：</p>
+<ul>
+<li>第一个连接符后边写屏幕尺寸，有<code>xs</code>超小屏幕 手机(&lt;768px)、<code>sm</code>小屏幕 平板 (≥768px)、<code>md</code>中等屏幕 桌面显示器(≥992px)、<code>lg</code>大屏幕 大桌面显示器 (≥1200px)四种。</li>
+<li><p>第二个连接符后边表示对应的份数，占12份中的几份。</p>
+<div class="row"><br>  <div class="col-md-2 text-center"></div><br>  <div class="col-md-5 text-center"></div><br>  <div class="col-md-2 text-center"></div><br>  <div class="col-md-3 text-center"></div><br></div>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>hidden类</strong>：设置在不同的屏幕下隐藏。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div class=<span class="string">"hidden-xs,hidden-sm,hidden-md,hidden-lg"</span>&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>text-xx类</strong>：设置文字的对齐方式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">text-center     文本居中</div><div class="line">text-left         文本左对齐</div><div class="line">text-right     文本右对齐</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>pull-xx类</strong>：设置浮动。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pull-left         左浮动类</div><div class="line">pull-right     右浮动类</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>center-block类</strong>：让一个固定宽度的元素居中。</p>
+</li>
+</ul>
+<h4 id="2-2-3-字体图标"><a href="#2-2-3-字体图标" class="headerlink" title="2.2.3 字体图标"></a>2.2.3 字体图标</h4><ul>
+<li><p>字体图标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@font-face &#123;</div><div class="line">  font-family: <span class="string">'XXX'</span>;</div><div class="line">  src: url(<span class="string">'../font/MiFie-Web-Font.eot'</span>) format(<span class="string">'embedded-opentype'</span>), </div><div class="line">  url(<span class="string">'../font/MiFie-Web-Font.svg'</span>) format(<span class="string">'svg'</span>), </div><div class="line">  url(<span class="string">'../font/MiFie-Web-Font.ttf'</span>) format(<span class="string">'truetype'</span>), </div><div class="line">  url(<span class="string">'../font/MiFie-Web-Font.woff'</span>) format(<span class="string">'woff'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>字体文件格式：</p>
+<ul>
+<li><code>eot</code>：<code>embedded-opentype</code></li>
+<li><code>svg</code>：<code>svg</code></li>
+<li><code>ttf</code>：<code>truetype</code></li>
+<li><code>woff</code>：<code>woff</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-4-轮播图插件-Carousel"><a href="#2-2-4-轮播图插件-Carousel" class="headerlink" title="2.2.4 轮播图插件 Carousel"></a>2.2.4 轮播图插件 Carousel</h4><ul>
+<li><p>基本的轮播图实现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&lt;!-- </div><div class="line">  以下容器就是整个轮播图组件的整体，</div><div class="line">  注意该盒子必须加上 class=<span class="string">"carousel slide"</span> data-ride=<span class="string">"carousel"</span> 表示当前是一个轮播图</div><div class="line">  bootstrap.js会自动为当前元 素添加图片轮播的特效</div><div class="line">--&gt;</div><div class="line">&lt;div id=<span class="string">"轮播图的ID"</span> class=<span class="string">"carousel slide"</span> data-ride=<span class="string">"carousel"</span>&gt;</div><div class="line">  &lt;!-- ol标签是图片轮播的控制点 --&gt;</div><div class="line">  &lt;ol class=<span class="string">"carousel-indicators"</span>&gt;</div><div class="line">    &lt;!-- </div><div class="line">      每一个li就是一个单独的控制点</div><div class="line">        data-target属性就是指定当前控制点控制的是哪一个轮播图，其目的是如果界面上有多个轮播图，便于区分到底控制哪一个</div><div class="line">        data-slide-to属性是指当前的li元素绑定的是第几个轮播项</div><div class="line">      注意，默认必须给其中某个li加上active，展示的时候就是焦点项目</div><div class="line">    --&gt;</div><div class="line">    &lt;li data-target=<span class="string">"#轮播图的ID"</span> data-slide-to=<span class="string">"0"</span> class=<span class="string">"active"</span>&gt;&lt;/li&gt;</div><div class="line">    &lt;li data-target=<span class="string">"#轮播图的ID"</span> data-slide-to=<span class="string">"1"</span>&gt;&lt;/li&gt;</div><div class="line">    &lt;!-- ...更多的 --&gt;</div><div class="line">  &lt;/ol&gt;</div><div class="line">  &lt;!-- </div><div class="line">    .carousel-inner是所有轮播项的容器盒子，</div><div class="line">    注意role=<span class="string">"listbox"</span>代表当前div是一个列表盒子，作用就是给当前div添加一个语义</div><div class="line">  --&gt;</div><div class="line">  &lt;div class=<span class="string">"carousel-inner"</span> role=<span class="string">"listbox"</span>&gt;</div><div class="line">    &lt;!-- 每一个.item就是单个轮播项目，注意默认要给第一个轮播项目加上active，表示为焦点 --&gt;</div><div class="line">    &lt;div class=<span class="string">"item active"</span>&gt;</div><div class="line">      &lt;!-- 轮播项目中展示的图片 --&gt;</div><div class="line">      ![](example.jpg)</div><div class="line">      &lt;div class=<span class="string">"carousel-caption"</span>&gt;</div><div class="line">        &lt;!-- 标题或说明性文字，如果不需要，直接删除当前div.carousel-caption --&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;div class=<span class="string">"item"</span>&gt;</div><div class="line">      &lt;!-- ... --&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">    &lt;!-- ... --&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">  &lt;!-- 图片轮播上左右两个控制按钮，分别点击可以滚动到上一张和下一张 --&gt;</div><div class="line">  &lt;!-- 此处需要注意的是 该a链接的href属性必须指向需要控制的轮播图ID --&gt;</div><div class="line">  &lt;!-- 另外a链接中的data-slide=<span class="string">"prev"</span>代表点击该链接会滚到上一张，如果设置为next的话则相反 --&gt;</div><div class="line">  &lt;a class=<span class="string">"left carousel-control"</span> href=<span class="string">"#轮播图的ID"</span> role=<span class="string">"button"</span> data-slide=<span class="string">"prev"</span>&gt;</div><div class="line">    &lt;span class=<span class="string">"glyphicon glyphicon-chevron-left"</span> aria-hidden=<span class="string">"true"</span>&gt;&lt;/span&gt;</div><div class="line">    &lt;span class=<span class="string">"sr-only"</span>&gt;上一张&lt;/span&gt;</div><div class="line">  &lt;/a&gt;</div><div class="line">  &lt;a class=<span class="string">"right carousel-control"</span> href=<span class="string">"#轮播图的ID"</span> role=<span class="string">"button"</span> data-slide=<span class="string">"next"</span>&gt;</div><div class="line">    &lt;span class=<span class="string">"glyphicon glyphicon-chevron-right"</span> aria-hidden=<span class="string">"true"</span>&gt;&lt;/span&gt;</div><div class="line">    &lt;span class=<span class="string">"sr-only"</span>&gt;下一张&lt;/span&gt;</div><div class="line">  &lt;/a&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-2-5-函数库-underscoreJS"><a href="#2-2-5-函数库-underscoreJS" class="headerlink" title="2.2.5 函数库 underscoreJS"></a>2.2.5 函数库 underscoreJS</h4><ul>
+<li><p><code>_.template</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;ol class=<span class="string">"carousel-indicators"</span>&gt;</div><div class="line">  &lt;!--渲染的HTML字符串--&gt;</div><div class="line">&lt;/ol&gt;</div><div class="line">&lt;div class=<span class="string">"carousel-inner"</span> role=<span class="string">"listbox"</span>&gt;</div><div class="line">  &lt;!--渲染的HTML字符串--&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">/*取到模版当中的字符串*/</div><div class="line">var pointTemplateStr = $(<span class="string">'#point_template'</span>).html();</div><div class="line">var imageTemplateStr = $(<span class="string">'#image_template'</span>).html();</div><div class="line">/*转化成模版函数*/</div><div class="line">var pointTemplate = _.template(pointTemplateStr);</div><div class="line">var imageTemplate = _.template(imageTemplateStr);</div><div class="line">/*传入数据 解析成 html 字符*/</div><div class="line">var pointHtml = pointTemplate(&#123;model:data&#125;);</div><div class="line">var imageHtml = imageTemplate(&#123;model:data,isMobile:isMobile&#125;);//我们只需要再加一个属性</div><div class="line">/*把html字符串渲染在页面当中*/</div><div class="line">$(<span class="string">'.carousel-indicators'</span>).html(pointHtml);</div><div class="line">$(<span class="string">'.carousel-inner'</span>).html(imageHtml);</div><div class="line"></div><div class="line">&lt;!--点模版--&gt;</div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/template"</span> id=<span class="string">"point_template"</span>&gt;</div><div class="line">    &lt;%_.each(model,<span class="keyword">function</span>(obj,i)&#123;%&gt;</div><div class="line">        &lt;li data-target=<span class="string">"#carousel-example-generic"</span> data-slide-to=<span class="string">"&lt;%=i%&gt;"</span> class=<span class="string">"&lt;%=(i==0?'active':'')%&gt;"</span>&gt;&lt;/li&gt;</div><div class="line">    &lt;%&#125;)%&gt;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;!--图片模版--&gt;</div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/template"</span> id=<span class="string">"image_template"</span>&gt;</div><div class="line">    &lt;%_.each(model,<span class="keyword">function</span>(obj,i)&#123;%&gt;</div><div class="line">        &lt;div class=<span class="string">"item &lt;%=(i==0?'active':'')%&gt;"</span>&gt;</div><div class="line">            &lt;% <span class="keyword">if</span>(isMobile)&#123; %&gt;</div><div class="line">                &lt;a href=<span class="string">"#"</span> class=<span class="string">"m_imgBox"</span>&gt;</div><div class="line">                    &lt;img src=<span class="string">"&lt;%=obj.img%&gt;"</span> alt=<span class="string">""</span>/&gt;</div><div class="line">                &lt;/a&gt;</div><div class="line">            &lt;%&#125; <span class="keyword">else</span> &#123;%&gt;</div><div class="line">                &lt;a href=<span class="string">"#"</span> class=<span class="string">"pc_imgBox"</span> style=<span class="string">"background-image:url(&lt;%=obj.bac%&gt;)"</span>&gt;&lt;/a&gt;</div><div class="line">            &lt;%&#125;%&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    &lt;%&#125;)%&gt;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="三、rem布局"><a href="#三、rem布局" class="headerlink" title="三、rem布局"></a>三、rem布局</h2><p>准备编辑这段时发现简书上已经有作者写了关于rem布局的介绍，并且他的设置比我所用的更加简洁，贴上地址供大家学习参考。<br><a href="http://www.jianshu.com/p/985d26b40199" target="_blank" rel="external">手机端页面自适应解决方案—rem布局进阶版（附源码示例）</a></p>
+<h2 id="四、移动web开发中的常见问题"><a href="#四、移动web开发中的常见问题" class="headerlink" title="四、移动web开发中的常见问题"></a>四、移动web开发中的常见问题</h2><h3 id="4-1-移动端如何定义字体font-family"><a href="#4-1-移动端如何定义字体font-family" class="headerlink" title="4.1 移动端如何定义字体font-family?"></a>4.1 移动端如何定义字体font-family?</h3><p>三大手机系统的字体：</p>
+<ul>
+<li><strong>iOS 系统</strong>：<ul>
+<li>默认中文字体是<code>Heiti SC</code></li>
+<li>默认英文字体是<code>Helvetica</code></li>
+<li>默认数字字体是<code>HelveticaNeue</code></li>
+<li>无微软雅黑字体</li>
+</ul>
+</li>
+<li><strong>Android 系统</strong>：<ul>
+<li>默认中文字体是<code>Droidsansfallback</code></li>
+<li>默认英文和数字字体是<code>Droid Sans</code></li>
+<li>无微软雅黑字体</li>
+</ul>
+</li>
+<li><strong>Winphone 系统</strong>：<ul>
+<li>默认中文字体是<code>Dengxian</code>(方正等线体)</li>
+<li>默认英文和数字字体是<code>Segoeod</code></li>
+<li>无微软雅黑字体</li>
+</ul>
+</li>
+</ul>
+<p>各个手机系统有自己的默认字体，且都不支持微软雅黑，如无特殊需求，手机端无需定义中文字体，使用系统默认英文字体和数字字体可使用<code>Helvetica</code>，三种系统都支持。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/* 移动端定义字体的代码 */</div><div class="line">body&#123;</div><div class="line">  font-family:Helvetica;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-2-移动端字体单位font-size选择px还是rem"><a href="#4-2-移动端字体单位font-size选择px还是rem" class="headerlink" title="4.2 移动端字体单位font-size选择px还是rem?"></a>4.2 移动端字体单位font-size选择px还是rem?</h3><ul>
+<li><p>对于只需要适配手机设备，使用<code>px</code>即可。</p>
+</li>
+<li><p>对于需要适配各种移动设备，使用<code>rem</code>，例如只需要适配<code>iPhone</code>和<code>iPad</code>等分辨率差别比较挺大的设备。</p>
+</li>
+<li><p><code>rem</code>配置参考：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">html &#123;font-size:10px&#125;</div><div class="line">@media screen and (min-width:480px) and (max-width:639px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 15px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:640px) and (max-width:719px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 20px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:720px) and (max-width:749px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 22.5px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:750px) and (max-width:799px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 23.5px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:800px) and (max-width:959px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 25px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:960px) and (max-width:1079px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 30px</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">@media screen and (min-width:1080px) &#123;</div><div class="line">    html &#123;</div><div class="line">        font-size: 32px</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-3-移动端touch事件-区分webkit和winphone-有哪些？"><a href="#4-3-移动端touch事件-区分webkit和winphone-有哪些？" class="headerlink" title="4.3 移动端touch事件(区分webkit和winphone)有哪些？"></a>4.3 移动端touch事件(区分webkit和winphone)有哪些？</h3><p>当用户手指放在移动设备在屏幕上滑动会触发的touch事件：</p>
+<ul>
+<li><strong>以下支持webkit</strong>：<ul>
+<li><code>touchstart</code>——当手指触碰屏幕时候发生。不管当前有多少只手指。</li>
+<li><code>touchmove</code>——当手指在屏幕上滑动时连续触发。通常我们再滑屏页面，会调用<code>event``preventDefault()</code>可以阻止默认情况的发生：阻止页面滚动。</li>
+<li><code>touchend</code>——当手指离开屏幕时触发。</li>
+<li><code>touchcancel</code>——系统停止跟踪触摸时候会触发。例如在触摸过程中突然页面<code>alert()</code>一个提示框，此时会触发该事件，这个事件比较少用。</li>
+</ul>
+</li>
+<li><strong>以下支持winphone 8</strong>：<ul>
+<li><code>MSPointerDown</code>——当手指触碰屏幕时候发生。不管当前有多少只手指。</li>
+<li><code>MSPointerMove</code>——当手指在屏幕上滑动时连续触发。通常我们再滑屏页面，会调用<code>css</code>的<code>html{-ms-touch-action:none;}</code>可以阻止默认情况的发生：阻止页面滚动。</li>
+<li><code>MSPointerUp</code>——当手指离开屏幕时触发。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-4-如何解决移动端click屏幕产生200-300ms的延迟响应问题？"><a href="#4-4-如何解决移动端click屏幕产生200-300ms的延迟响应问题？" class="headerlink" title="4.4 如何解决移动端click屏幕产生200-300ms的延迟响应问题？"></a>4.4 如何解决移动端click屏幕产生200-300ms的延迟响应问题？</h3><blockquote>
+<p>移动设备上的web网页是有300ms延迟的，往往会造成按钮点击延迟甚至是点击失效。</p>
+</blockquote>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li><code>fastclick</code>可以解决在手机上点击事件的300ms延迟。</li>
+<li><code>zepto</code>的<code>touch</code>模块，<code>tap</code>事件也是为了解决在<code>click</code>的延迟问题。</li>
+</ul>
+<p><strong>触摸事件的响应顺序</strong>：</p>
+<ol>
+<li><code>ontouchstart</code></li>
+<li><code>ontouchmove</code></li>
+<li><code>ontouchend</code></li>
+<li><code>onclick</code></li>
+</ol>
+<p>解决300ms延迟的问题，也可以通过绑定<code>ontouchstart</code>事件，加快对事件的响应。</p>
+<h3 id="4-5-什么是Retina-显示屏，带来了什么问题？"><a href="#4-5-什么是Retina-显示屏，带来了什么问题？" class="headerlink" title="4.5 什么是Retina 显示屏，带来了什么问题？"></a>4.5 什么是Retina 显示屏，带来了什么问题？</h3><p><strong>retina</strong>：一种具备超高像素密度的液晶屏，同样大小的屏幕上显示的像素点由1个变为多个，如在同样带下的屏幕上，苹果设备的<code>retina</code>显示屏中，像素点1个变为4个。</p>
+<p>在高清显示屏中的位图被放大，图片会变得模糊，<strong>因此移动端的视觉稿通常会设计为传统PC的2倍</strong>。</p>
+<p>那么，前端的应对方案是：</p>
+<p>设计稿切出来的图片长宽保证为偶数，并使用<code>backgroud-size</code>把图片缩小为原来的1/2。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//例如图片宽高为：200px*200px，那么写法如下</div><div class="line">.css&#123;width:100px;height:100px;background-size:100px 100px;&#125;</div></pre></td></tr></table></figure>
+<p>其它元素的取值为原来的1/2，例如视觉稿40px的字体，使用样式的写法为20px。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.css&#123;font-size:20px&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-6-移动端如何取消touch高亮效果？"><a href="#4-6-移动端如何取消touch高亮效果？" class="headerlink" title="4.6 移动端如何取消touch高亮效果？"></a>4.6 移动端如何取消touch高亮效果？</h3><p>在做移动端页面时，会发现所有a标签在触发点击时或者所有设置了伪类<code>:active</code>的元素，默认都会在激活状态时，显示高亮框，如果不想要这个高亮，那么你可以通过css以下方法来进行全局的禁止：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">html &#123;</div><div class="line">    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><code>ios</code>用户点击一个链接，会出现一个半透明灰色遮罩, 如果想要禁用，可设置<code>-webkit-tap-highlight-color</code>的<code>alpha</code>值为0，也就是属性值的最后一位设置为0就可以去除半透明灰色遮罩。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a,button,input,textarea&#123;-webkit-tap-highlight-color: rgba(0,0,0,0;)&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>android</code>用户点击一个链接，会出现一个边框或者半透明灰色遮罩, 不同生产商定义出来额效果不一样，可设置<code>-webkit-tap-highlight-color的alpha</code>值为0去除部分机器自带的效果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a,button,input,textarea&#123;</div><div class="line">    -webkit-tap-highlight-color: rgba(0,0,0,0;)</div><div class="line">    -webkit-user-modify:<span class="built_in">read</span>-write-plaintext-only; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>-webkit-user-modify</code>有个副作用，就是输入法不再能够输入多个字符。</p>
+<p>另外，有些机型去除不了，如小米2。对于此类问题还有个办法，不使用<code>a</code>或者<code>input</code>标签，直接用<code>div</code>标签。</p>
+</li>
+<li><p><code>winphone</code>系统<code>a</code>、<code>input</code>标签被点击时产生的半透明灰色背景怎么去掉？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"msapplication-tap-highlight"</span> content=<span class="string">"no"</span>&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-7-关于webkit表单的几个问题"><a href="#4-7-关于webkit表单的几个问题" class="headerlink" title="4.7 关于webkit表单的几个问题"></a>4.7 关于webkit表单的几个问题</h3><ul>
+<li><p><code>webkit</code>表单元素的默认外观怎么重置？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.css&#123;-webkit-appearance:none;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>webkit</code>表单输入框<code>placeholder</code>的颜色值能改变么？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">input::-webkit-input-placeholder&#123;color:<span class="comment">#AAAAAA;&#125;</span></div><div class="line">input:focus::-webkit-input-placeholder&#123;color:<span class="comment">#EEE&#125;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>webkit</code>表单输入框<code>placeholder</code>的文字能换行么？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iOS可以，Android不行。</div></pre></td></tr></table></figure>
+</li>
+<li><p>如何禁止文本缩放？</p>
+<p>当移动设备横竖屏切换时，文本的大小会重新计算，进行相应的缩放，当我们不需要这种情况时，可以选择禁止：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">html &#123;</div><div class="line">    -webkit-text-size-adjust: 100%;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要注意的是，PC端的该属性已经被移除，该属性在移动端要生效，必须设置<code>meta viewport</code>。</p>
+</li>
+</ul>
+<h3 id="4-8-如何在移动端禁止用户选中内容？"><a href="#4-8-如何在移动端禁止用户选中内容？" class="headerlink" title="4.8 如何在移动端禁止用户选中内容？"></a>4.8 如何在移动端禁止用户选中内容？</h3><p>如果你不想用户可以选中页面中的内容，那么你可以在css中禁掉：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.user-select-none &#123;</div><div class="line">  -webkit-user-select: none;  /* Chrome all / Safari all */</div><div class="line">  -moz-user-select: none;     /* Firefox all （移动端不需要） */</div><div class="line">  -ms-user-select: none;      /* IE 10+ */      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-9-如何模拟按钮的hover效果？"><a href="#4-9-如何模拟按钮的hover效果？" class="headerlink" title="4.9 如何模拟按钮的hover效果？"></a>4.9 如何模拟按钮的hover效果？</h3><p>移动端触摸按钮的效果，可明示用户有些事情正要发生，是一个比较好体验，但是移动设备中并没有鼠标指针，使用<code>css</code>的<code>hover</code>并不能满足我们的需求，还好国外有个激活<code>css</code>的<code>active</code>效果，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta charset=<span class="string">"utf-8"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span> name=<span class="string">"viewport"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"yes"</span> name=<span class="string">"apple-mobile-web-app-capable"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"black"</span> name=<span class="string">"apple-mobile-web-app-status-bar-style"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"telephone=no"</span> name=<span class="string">"format-detection"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"email=no"</span> name=<span class="string">"format-detection"</span>&gt;</div><div class="line">&lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">a&#123;-webkit-tap-highlight-color: rgba(0,0,0,0);&#125;</div><div class="line">.btn-blue&#123;display:block;height:42px;line-height:42px;text-align:center;border-radius:4px;font-size:18px;color:<span class="comment">#FFFFFF;background-color: #4185F3;&#125;</span></div><div class="line">.btn-blue:active&#123;background-color: <span class="comment">#357AE8;&#125;</span></div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">&lt;div class=<span class="string">"btn-blue"</span>&gt;按钮&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">document.addEventListener(<span class="string">"touchstart"</span>, <span class="function"><span class="title">function</span></span>()&#123;&#125;, <span class="literal">true</span>)</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">兼容性ios5+、部分android 4+、winphone 8</div></pre></td></tr></table></figure>
+<p>要做到全兼容的办法，可通过绑定<code>ontouchstart</code>和<code>ontouchend</code>来控制按钮的类名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta charset=<span class="string">"utf-8"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span> name=<span class="string">"viewport"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"yes"</span> name=<span class="string">"apple-mobile-web-app-capable"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"black"</span> name=<span class="string">"apple-mobile-web-app-status-bar-style"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"telephone=no"</span> name=<span class="string">"format-detection"</span>&gt;</div><div class="line">&lt;meta content=<span class="string">"email=no"</span> name=<span class="string">"format-detection"</span>&gt;</div><div class="line">&lt;style <span class="built_in">type</span>=<span class="string">"text/css"</span>&gt;</div><div class="line">a&#123;-webkit-tap-highlight-color: rgba(0,0,0,0);&#125;</div><div class="line">.btn-blue&#123;display:block;height:42px;line-height:42px;text-align:center;border-radius:4px;font-size:18px;color:<span class="comment">#FFFFFF;background-color: #4185F3;&#125;</span></div><div class="line">.btn-blue-on&#123;background-color: <span class="comment">#357AE8;&#125;</span></div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">&lt;div class=<span class="string">"btn-blue"</span>&gt;按钮&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">var btnBlue = document.querySelector(<span class="string">".btn-blue"</span>);</div><div class="line">btnBlue.ontouchstart = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    this.className = <span class="string">"btn-blue btn-blue-on"</span></div><div class="line">&#125;</div><div class="line">btnBlue.ontouchend = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    this.className = <span class="string">"btn-blue"</span></div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h3 id="4-10-屏幕旋转的事件和样式"><a href="#4-10-屏幕旋转的事件和样式" class="headerlink" title="4.10 屏幕旋转的事件和样式"></a>4.10 屏幕旋转的事件和样式</h3><ul>
+<li><p><strong>事件</strong>：<code>window.orientation</code>，取值：正负90表示横屏模式、0和180表现为竖屏模式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">window.onorientationchange = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">            switch(window.orientation)&#123;</div><div class="line">                <span class="keyword">case</span> -90:</div><div class="line">                <span class="keyword">case</span> 90:</div><div class="line">                alert(<span class="string">"横屏:"</span> + window.orientation);</div><div class="line">                <span class="keyword">case</span> 0:</div><div class="line">                <span class="keyword">case</span> 180:</div><div class="line">                alert(<span class="string">"竖屏:"</span> + window.orientation);</div><div class="line">                <span class="built_in">break</span>;</div><div class="line">            &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>样式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//竖屏时使用的样式</div><div class="line">@media all and (orientation:portrait) &#123;</div><div class="line">    .css&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//横屏时使用的样式</div><div class="line">@media all and (orientation:landscape) &#123;</div><div class="line">    .css&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-11-移动端常见的一些功能"><a href="#4-11-移动端常见的一些功能" class="headerlink" title="4.11 移动端常见的一些功能"></a>4.11 移动端常见的一些功能</h3><ul>
+<li><p>摇一摇功能：</p>
+<p><code>HTML5 deviceMotion</code>：封装了运动传感器数据的事件，可以获取手机运动状态下的运动加速度等数据。</p>
+</li>
+<li><p>手机拍照和上传图片：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"file"</span>&gt;的accept 属性</div><div class="line">&lt;!-- 选择照片 --&gt;</div><div class="line">&lt;input <span class="built_in">type</span>=file accept=<span class="string">"image/*"</span>&gt;</div><div class="line">&lt;!-- 选择视频 --&gt;</div><div class="line">&lt;input <span class="built_in">type</span>=file accept=<span class="string">"video/*"</span>&gt;</div></pre></td></tr></table></figure>
+<p>使用总结：</p>
+<ol>
+<li><code>iOS</code>有拍照、录像、选取本地图片功能。</li>
+<li>部分<code>android</code>只有选取本地图片功能。</li>
+<li><code>winphone</code>不支持。</li>
+<li><code>input</code>控件默认外观丑陋。</li>
+</ol>
+</li>
+<li><p>消除<code>transition</code>闪屏：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">.css&#123;</div><div class="line">    /*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/</div><div class="line">    -webkit-transform-style: preserve-3d;</div><div class="line">    /*（设置进行转换的元素的背面在面对用户时是否可见：隐藏）*/</div><div class="line">    -webkit-backface-visibility: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>开启硬件加速：</p>
+<ol>
+<li>解决页面闪白。</li>
+<li><p>保证动画流畅。</p>
+<p>.css {</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-webkit-transform: translate3d(0, 0, 0);</div><div class="line">-moz-transform: translate3d(0, 0, 0);</div><div class="line">-ms-transform: translate3d(0, 0, 0);</div><div class="line">transform: translate3d(0, 0, 0);</div></pre></td></tr></table></figure>
+<p>  }</p>
+</li>
+</ol>
+</li>
+<li><p><code>android</code>上去掉语音输入按钮：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">input::-webkit-input-speech-button &#123;display: none&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-12-如何禁止百度转码？"><a href="#4-12-如何禁止百度转码？" class="headerlink" title="4.12 如何禁止百度转码？"></a>4.12 如何禁止百度转码？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"Cache-Control"</span> content=<span class="string">"no-siteapp"</span> /&gt;</div></pre></td></tr></table></figure>
+<h3 id="4-13-怎样默认优先使用最新版本IE和Chrome？"><a href="#4-13-怎样默认优先使用最新版本IE和Chrome？" class="headerlink" title="4.13 怎样默认优先使用最新版本IE和Chrome？"></a>4.13 怎样默认优先使用最新版本IE和Chrome？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=edge,chrome=1"</span> /&gt;</div></pre></td></tr></table></figure>
+<p><strong> 原文地址：<a href="http://www.jianshu.com/u/7c71a417c6c9" target="_blank" rel="external">http://www.jianshu.com/u/7c71a417c6c9</a> </strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/">常见布局</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 CC 的个人博客">CC</a></p>
+        <p><span>发布时间:</span>2017年03月12日 - 17时47分</p>
+        <p><span>最后更新:</span>2017年06月15日 - 12时09分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/" title="常见布局">http://yoursite.com/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/　　作者: CC" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/2017/04/12/经典JS闭包面试题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          经典JS闭包面试题
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/2017/03/12/强大的CSS3选择器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">强大的CSS3选择器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、流式布局"><span class="toc-number">1.</span> <span class="toc-text">一、流式布局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-什么是流式布局"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是流式布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-viewport"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 viewport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-移动端常见事件"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 移动端常见事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-touch事件"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1 touch事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-event事件"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2 event事件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、响应式开发"><span class="toc-number">2.</span> <span class="toc-text">二、响应式开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-响应式开发简介"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 响应式开发简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-什么是响应式开发"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 什么是响应式开发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-响应式开发的前景"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 响应式开发的前景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-响应式开发的原理"><span class="toc-number">2.1.3.</span> <span class="toc-text">2.1.3 响应式开发的原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bootstrap框架"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Bootstrap框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Bootstrap简介"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 Bootstrap简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Bootstrap常用样式"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 Bootstrap常用样式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-字体图标"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 字体图标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-轮播图插件-Carousel"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 轮播图插件 Carousel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-函数库-underscoreJS"><span class="toc-number">2.2.5.</span> <span class="toc-text">2.2.5 函数库 underscoreJS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、rem布局"><span class="toc-number">3.</span> <span class="toc-text">三、rem布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、移动web开发中的常见问题"><span class="toc-number">4.</span> <span class="toc-text">四、移动web开发中的常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-移动端如何定义字体font-family"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 移动端如何定义字体font-family?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-移动端字体单位font-size选择px还是rem"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 移动端字体单位font-size选择px还是rem?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-移动端touch事件-区分webkit和winphone-有哪些？"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 移动端touch事件(区分webkit和winphone)有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-如何解决移动端click屏幕产生200-300ms的延迟响应问题？"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 如何解决移动端click屏幕产生200-300ms的延迟响应问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-什么是Retina-显示屏，带来了什么问题？"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 什么是Retina 显示屏，带来了什么问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-移动端如何取消touch高亮效果？"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 移动端如何取消touch高亮效果？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-关于webkit表单的几个问题"><span class="toc-number">4.7.</span> <span class="toc-text">4.7 关于webkit表单的几个问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-如何在移动端禁止用户选中内容？"><span class="toc-number">4.8.</span> <span class="toc-text">4.8 如何在移动端禁止用户选中内容？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-9-如何模拟按钮的hover效果？"><span class="toc-number">4.9.</span> <span class="toc-text">4.9 如何模拟按钮的hover效果？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-10-屏幕旋转的事件和样式"><span class="toc-number">4.10.</span> <span class="toc-text">4.10 屏幕旋转的事件和样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-11-移动端常见的一些功能"><span class="toc-number">4.11.</span> <span class="toc-text">4.11 移动端常见的一些功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-12-如何禁止百度转码？"><span class="toc-number">4.12.</span> <span class="toc-text">4.12 如何禁止百度转码？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-13-怎样默认优先使用最新版本IE和Chrome？"><span class="toc-number">4.13.</span> <span class="toc-text">4.13 怎样默认优先使用最新版本IE和Chrome？</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/2017/04/12/经典JS闭包面试题/" title="上一篇: 经典JS闭包面试题">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2017/03/12/强大的CSS3选择器/" title="下一篇: 强大的CSS3选择器">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/HTML5本地存储和本地数据库的前世今生/">HTML5本地存储和本地数据库的前世今生</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/12/经典JS闭包面试题/">经典JS闭包面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/">常见布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/强大的CSS3选择器/">强大的CSS3选择器</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 CC
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
