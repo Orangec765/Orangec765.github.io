@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-15T03:39:58.215Z</updated>
+  <updated>2017-06-15T03:43:42.792Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,15 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>HTML5本地存储和本地数据库</title>
-    <link href="http://yoursite.com/2017/05/12/HTML5%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库/</id>
+    <title>HTML5本地存储和本地数据库的前世今生</title>
+    <link href="http://yoursite.com/2017/05/12/HTML5%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/"/>
+    <id>http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库的前世今生/</id>
     <published>2017-05-12T09:48:49.000Z</published>
-    <updated>2017-06-15T03:39:58.215Z</updated>
+    <updated>2017-06-15T03:43:42.792Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
+    <content type="html"><![CDATA[<p>当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。</p>
+<a id="more"></a>
+<h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
 <p>下面是Cookie的限制：</p>
 <ul>
 <li>大多数浏览器支持最大为 4096 字节的Cookie。</li>
@@ -35,7 +37,6 @@
 <li>永久性的本地存储（localStorage）</li>
 <li>会话级别的本地存储（sessionStorage）</li>
 </ul>
-<a id="more"></a>
 <h4 id="二、永久性的本地存储：localStorage"><a href="#二、永久性的本地存储：localStorage" class="headerlink" title="二、永久性的本地存储：localStorage"></a>二、永久性的本地存储：localStorage</h4><p>在最新的JS的API中增加了localStorage对象，以便于用户存储永久存储的Web端的数据。而且数据不会随着Http请求发送到后台服务器，而且存储数据的大小机会不用考虑，因为在HTML5的标准中要求浏览器至少要支持到4MB.所以，这完全是颠覆了Cookie的限制，为Web应用在本地存储复杂的用户痕迹数据提供非常方便的技术支持。接下来就将介绍localStorage的常用的方法。</p>
 <p>localStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
 <ul>
@@ -92,19 +93,7 @@
     
     <summary type="html">
     
-      &lt;h4 id=&quot;一、本地存储由来的背景&quot;&gt;&lt;a href=&quot;#一、本地存储由来的背景&quot; class=&quot;headerlink&quot; title=&quot;一、本地存储由来的背景&quot;&gt;&lt;/a&gt;一、本地存储由来的背景&lt;/h4&gt;&lt;p&gt;由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。&lt;/p&gt;
-&lt;p&gt;下面是Cookie的限制：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;大多数浏览器支持最大为 4096 字节的Cookie。&lt;/li&gt;
-&lt;li&gt;浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。&lt;/li&gt;
-&lt;li&gt;有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。&lt;/li&gt;
-&lt;li&gt;Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;永久性的本地存储（localStorage）&lt;/li&gt;
-&lt;li&gt;会话级别的本地存储（sessionStorage）&lt;/li&gt;
-&lt;/ul&gt;
+      &lt;p&gt;当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。&lt;/p&gt;
     
     </summary>
     
