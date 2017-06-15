@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>经典JS闭包面试题 | 夏至未至</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典JS闭包面试题">
+<meta property="og:url" content="http://yoursite.com/2017/06/14/经典JS闭包面试题/index.html">
+<meta property="og:site_name" content="夏至未至">
+<meta property="og:description" content="闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/675733-e9995a01ed05d416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/675733-1ba53a0815064f6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/675733-b119cb7ac30d142e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/675733-ff61db72e84f3caf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-06-15T03:12:50.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典JS闭包面试题">
+<meta name="twitter:description" content="闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/675733-e9995a01ed05d416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="夏至未至" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/header.jpg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CC</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder=" Search...">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/开发工具/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/CSS3/" style="font-size: 10px;">CSS3</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CC</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/header.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CC</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/开发工具/">玩转开发工具</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-经典JS闭包面试题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2017/06/14/经典JS闭包面试题/" class="article-date">
+      <time datetime="2017-06-14T09:48:49.000Z" itemprop="datePublished">2017-06-14</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      经典JS闭包面试题
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。</p>
+<a id="more"></a>
+<h2 id="由工作中演变而来的面试题"><a href="#由工作中演变而来的面试题" class="headerlink" title="由工作中演变而来的面试题"></a>由工作中演变而来的面试题</h2><p>这是一个我工作当中的遇到的一个问题，似乎很有趣，就当做了一道题去面试，发现几乎没人能全部答对并说出原因，遂拿出来聊一聊吧。</p>
+<p>先看题目代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
+<p>这是一道非常典型的JS闭包问题。其中嵌套了三层<code>fun</code>函数，搞清楚每层<code>fun</code>的函数是那个<code>fun</code>函数尤为重要。</p>
+<p>可以先在纸上或其他地方写下你认为的结果，然后展开看看正确答案是什么？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//答案：</div><div class="line">//a: undefined,0,0,0</div><div class="line">//b: undefined,0,1,2</div><div class="line">//c: undefined,0,1,1</div></pre></td></tr></table></figure>
+<p>都答对了么？如果都答对了恭喜你在js闭包问题当中几乎没什么可以难住你了；如果没有答对，继续往下分析。</p>
+<h2 id="JS中有几种函数"><a href="#JS中有几种函数" class="headerlink" title="JS中有几种函数"></a>JS中有几种函数</h2><p>首先，在此之前需要了解的是，在JS中函数可以分为两种，<strong>具名函数（命名函数）</strong>和<strong>匿名函数</strong>。</p>
+<p>区分这两种函数的方法非常简单，可以通过输出<code>fn.name</code>来判断，有name的就是具名函数，没有name的就是匿名函数。</p>
+<blockquote>
+<p>注意：在低版本IE上无法获取具名函数的name，会返回undefined，建议在火狐或是谷歌浏览器上测试。</p>
+</blockquote>
+<p>或是采用兼容IE的获取函数<code>name</code>方法来获取函数名称：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 获取指定函数的函数名称（用于兼容IE）</div><div class="line">    * @param &#123;Function&#125; fun 任意函数</div><div class="line">    */</div><div class="line"><span class="keyword">function</span> getFunctionName(fun) &#123;</div><div class="line">    <span class="keyword">if</span> (fun.name !== undefined)</div><div class="line">        <span class="built_in">return</span> fun.name;</div><div class="line">    var ret = fun.toString();</div><div class="line">    ret = ret.substr(<span class="string">'function '</span>.length);</div><div class="line">    ret = ret.substr(0, ret.indexOf(<span class="string">'('</span>));</div><div class="line">    <span class="built_in">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>遂用上述函数测试是否为匿名函数：</p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-e9995a01ed05d416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p>可以得知变量<code>fn1</code>是具名函数，<code>fn2</code>是匿名函数。</p>
+<h2 id="创建函数的几种方式"><a href="#创建函数的几种方式" class="headerlink" title="创建函数的几种方式"></a>创建函数的几种方式</h2><p>说完函数的类型，还需要了解JS中创建函数都有几种创建方法。</p>
+<p><strong>1、声明函数</strong></p>
+<p>最普通最标准的声明函数方法，包括函数名及函数体。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;&#125;</div></pre></td></tr></table></figure>
+<p><strong>2、创建匿名函数表达式</strong></p>
+<p>创建一个变量，这个变量的内容为一个函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;</div></pre></td></tr></table></figure>
+<p>注意采用这种方法创建的函数为<strong>匿名函数</strong>，即没有函数<code>name</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;;</div><div class="line">getFunctionName(fn1).length;//0</div></pre></td></tr></table></figure>
+<p><strong>3、创建具名函数表达式</strong></p>
+<p>创建一个变量，内容为一个带有名称的函数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：具名函数表达式的函数名只能在创建函数内部使用</p>
+</blockquote>
+<p>即采用此种方法创建的函数在函数外层只能使用fn1不能使用xxcanghai的函数名。xxcanghai的命名只能在创建的函数内部使用。</p>
+<p>测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"in:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">&#125;;</div><div class="line">console.log(<span class="string">"out:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">fn1();</div><div class="line">//out:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; undefined &gt;</div><div class="line">//<span class="keyword">in</span>:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; <span class="keyword">function</span> &gt;</div></pre></td></tr></table></figure>
+<p>可以看到在函数外部（out）无法使用xxcanghai的函数名，为undefined。</p>
+<blockquote>
+<p>注意：在对象内定义函数如<code>var o={ fn : function (){…} }</code>，也属于函数表达式。</p>
+</blockquote>
+<p><strong>4、Function构造函数</strong></p>
+<p>可以给 <code>Function</code> 构造函数传一个函数字符串，返回包含这个字符串命令的函数，此种方法创建的是<strong>匿名函数</strong>。</p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-1ba53a0815064f6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p><strong>5、自执行函数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="title">function</span></span>()&#123;alert(1);&#125;)();</div><div class="line">(<span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;alert(1);&#125;)();</div></pre></td></tr></table></figure>
+<p>自执行函数属于上述的“函数表达式”，规则相同</p>
+<p><strong>6、其他创建函数的方法</strong></p>
+<p>当然还有其他创建函数或执行函数的方法，这里不再多说，比如采用 <code>eval</code> ， <code>setTimeout</code> ， <code>setInterval</code> 等非常用方法，这里不做过多介绍，属于非标准方法，这里不做过多展开。</p>
+<h2 id="三个fun函数的关系是什么？"><a href="#三个fun函数的关系是什么？" class="headerlink" title="三个fun函数的关系是什么？"></a>三个fun函数的关系是什么？</h2><p>说完函数类型与创建函数的方法后，就可以回归主题，看这道面试题。</p>
+<p>这段代码中出现了三个<code>fun</code>函数，所以第一步先搞清楚，这三个<code>fun</code>函数的关系，哪个函数与哪个函数是相同的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      //...</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先看第一个<code>fun</code>函数，属于标准具名函数声明，是<strong>新创建</strong>的函数，他的返回值是一个对象字面量表达式，属于一个新的object。</p>
+<p>这个新的对象内部包含一个也叫<code>fun</code>的属性，通过上述介绍可得知，属于匿名函数表达式，即<code>fun</code>这个属性中存放的是一个<strong>新创建</strong>匿名函数表达式。</p>
+<blockquote>
+<p>注意：所有<strong>声明的匿名函数都是一个新函数。</strong></p>
+</blockquote>
+<p>所以第一个<code>fun</code>函数与第二个<code>fun</code>函数不相同，均为新创建的函数。</p>
+<h2 id="函数作用域链的问题"><a href="#函数作用域链的问题" class="headerlink" title="函数作用域链的问题"></a>函数作用域链的问题</h2><p>再说第三个<code>fun</code>函数之前需要先说下，在<em>函数表达式</em>内部能不能访问存放当前函数的变量。</p>
+<p><strong>测试1，对象内部的函数表达式：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">bash</div><div class="line">var o=&#123;</div><div class="line">  fn:<span class="function"><span class="title">function</span></span> ()&#123;</div><div class="line">    console.log(fn);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">o.fn();//ERROR报错</div></pre></td></tr></table></figure>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-b119cb7ac30d142e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p><strong>测试2，非对象内部的函数表达式：</strong></p>
+<p>var fn=function (){<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  console.log(fn);</div><div class="line">&#125;;</div><div class="line">fn();//<span class="function"><span class="title">function</span></span> ()&#123;console.log(fn);&#125;;正确</div></pre></td></tr></table></figure></p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-ff61db72e84f3caf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p>结论是：使用var或是非对象内部的函数表达式内，可以访问到存放当前函数的变量；在对象内部的不能访问到。</p>
+<p>原因也非常简单，因为<strong>函数作用域链</strong>的问题，采用var的是在外部创建了一个fn变量，函数内部当然可以在内部寻找不到fn后向上册作用域查找fn，而在创建对象内部时，因为没有在函数作用域内创建fn，所以无法访问。</p>
+<p>所以综上所述，可以得知，<strong>最内层的return出去的<code>fun</code>函数不是第二层<code>fun</code>函数，是最外层的<code>fun</code>函数</strong>。</p>
+<p>所以，三个<code>fun</code>函数的关系也理清楚了，第一个等于第三个，他们都不等于第二个。</p>
+<h2 id="到底在调用哪个函数？"><a href="#到底在调用哪个函数？" class="headerlink" title="到底在调用哪个函数？"></a>到底在调用哪个函数？</h2><p>再看下原题，现在知道了程序中有两个<code>fun</code>函数(第一个和第三个相同)，遂接下来的问题是搞清楚，运行时他执行的是哪个<code>fun</code>函数？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
+<p><strong>1、第一行a</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var a = fun(0); a.fun(1); a.fun(2); a.fun(3);</div></pre></td></tr></table></figure>
+<p>可以得知，第一个<code>fun(0)</code>是在调用<strong>第一层<code>fun</code>函数</strong>。第二个<code>fun(1)</code>是在调用前一个<code>fun</code>的返回值的<code>fun</code>函数，所以：<br>第后面几个<code>fun(1)</code>,<code>fun(2)</code>,<code>fun(3)</code>,函数都是在调用<strong>第二层<code>fun</code>函数</strong>。</p>
+<p>遂：</p>
+<p>在第一次调用<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用<code>fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用<code>fun(2)</code>时<code>m</code>为<code>2</code>，但依然是调用<code>a.fun</code>，所以还是闭包了第一次调用时的n，所以内部调用第一层的<code>fun(2,0);</code>所以<code>o</code>为<code>0</code></p>
+<p>第四次同理；</p>
+<p>即：最终答案为<code>undefined,0,0,0</code></p>
+<p><strong>2、第二行b</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
+<p>先从<code>fun(0)</code>开始看，肯定是调用的第一层<code>fun</code>函数；而他的返回值是一个对象，所以第二个<code>fun(1)</code>调用的是第二层<code>fun</code>函数，后面几个也是调用的第二层<code>fun</code>函数。</p>
+<p>遂：</p>
+<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用 <code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时当前的<code>fun</code>函数不是第一次执行的返回对象，而是<strong>第二次执行的返回对象</strong>。而在第二次执行第一层<code>fun</code>函数时时<code>(1,0)</code>所以<code>n=1</code>,<code>o=0</code>,返回时闭包了第二次的<code>n</code>，遂在第三次调用第三层<code>fun</code>函数时<code>m=2</code>,<code>n=1</code>，即调用第一层<code>fun</code>函数<code>fun(2,1)</code>，所以<code>o</code>为<code>1</code>；</p>
+<p>第四次调用 <code>.fun(3)</code>时<code>m</code>为<code>3</code>，闭包了第三次调用的<code>n</code>，同理，最终调用第一层<code>fun</code>函数为<code>fun(3,2)</code>；所以<code>o</code>为<code>2</code>；</p>
+<p>即最终答案：<code>undefined,0,1,2</code></p>
+<p><strong>3、第三行c</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var c = fun(0).fun(1); c.fun(2); c.fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
+<p>根据前面两个例子，可以得知：</p>
+<p><code>fun(0)</code>为执行第一层<code>fun</code>函数，<code>.fun(1)</code>执行的是<code>fun(0)</code>返回的第二层<code>fun</code>函数，这里语句结束，遂<code>c</code>存放的是<code>fun(1)</code>的返回值，而不是<code>fun(0)</code>的返回值，所以<code>c</code>中闭包的也是<code>fun(1)</code>第二次执行的<code>n</code>的值。<code>c.fun(2)</code>执行的是<code>fun(1)</code>返回的第二层<code>fun函数</code>，<code>c.fun(3)</code>执行的<strong>也</strong>是<code>fun(1)</code>返回的第二层<code>fun</code>函数。</p>
+<p>遂：</p>
+<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用<code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时<code>fun</code>闭包的是第二次调用的<code>n=1</code>，即<code>m=2</code>，<code>n=1</code>，并在内部调用第一层<code>fun</code>函数<code>fun(2,1);</code>所以<code>o</code>为<code>1</code>；</p>
+<p>第四次<code>.fun(3)</code>时同理，但依然是调用的第二次的返回值，遂最终调用第一层<code>fun</code>函数<code>fun(3,1)</code>，所以<code>o</code>还为<code>1</code></p>
+<p>即最终答案：<code>undefined,0,1,1</code></p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>这段代码原本是在做一个将异步回调改写为同步调用的组件时的代码，发现了这个坑，对JS的闭包有了更深入的了解。</p>
+<p>关于什么是闭包，网上的文章数不胜数，但理解什么是闭包还是要在代码中自己去发现与领悟。</p>
+<p>如果要我说什么是闭包，我认为，广义上的闭包就是指一个变量在他自身作用域外被使用了，就叫发生了闭包。</p>
+<p>希望读者能通过本文对闭包现象有进一步的了解，如有其它见解或看法，欢迎指正或留言讨论。</p>
+<p><strong> 作者：<a href="http://www.cnblogs.com/xxcanghai/" target="_blank" rel="external">小小沧海</a>  </strong><br><strong> 原文地址：<a href="http://www.cnblogs.com/xxcanghai/p/4991870.html" target="_blank" rel="external">http://www.cnblogs.com/xxcanghai/p/4991870.html</a> </strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2017/06/14/经典JS闭包面试题/">经典JS闭包面试题</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 CC 的个人博客">CC</a></p>
+        <p><span>发布时间:</span>2017年06月14日 - 17时48分</p>
+        <p><span>最后更新:</span>2017年06月15日 - 11时12分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/14/经典JS闭包面试题/" title="经典JS闭包面试题">http://yoursite.com/2017/06/14/经典JS闭包面试题/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/06/14/经典JS闭包面试题/　　作者: CC" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a  href="/2017/06/14/强大的CSS3选择器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">强大的CSS3选择器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#由工作中演变而来的面试题"><span class="toc-number">1.</span> <span class="toc-text">由工作中演变而来的面试题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS中有几种函数"><span class="toc-number">2.</span> <span class="toc-text">JS中有几种函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建函数的几种方式"><span class="toc-number">3.</span> <span class="toc-text">创建函数的几种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三个fun函数的关系是什么？"><span class="toc-number">4.</span> <span class="toc-text">三个fun函数的关系是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数作用域链的问题"><span class="toc-number">5.</span> <span class="toc-text">函数作用域链的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#到底在调用哪个函数？"><span class="toc-number">6.</span> <span class="toc-text">到底在调用哪个函数？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后话"><span class="toc-number">7.</span> <span class="toc-text">后话</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2017/06/14/强大的CSS3选择器/" title="下一篇: 强大的CSS3选择器">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/经典JS闭包面试题/">经典JS闭包面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/14/强大的CSS3选择器/">强大的CSS3选择器</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 CC
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

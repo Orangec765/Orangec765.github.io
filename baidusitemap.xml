@@ -4,11 +4,28 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/06/14/%E7%A5%9E%E9%80%9A%E5%B9%BF%E5%A4%A7%E7%9A%84CSS3%E9%80%89%E6%8B%A9%E5%99%A8/</loc>
-    <lastmod>2017-06-14T10:55:35.083Z</lastmod>
+    <loc>http://yoursite.com/2017/06/14/%E7%BB%8F%E5%85%B8JS%E9%97%AD%E5%8C%85%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    <lastmod>2017-06-15T03:12:50.292Z</lastmod>
     <data>
         <display>
-        <title>神通广大的CSS3</title>
+        <title>经典JS闭包面试题</title>
+        <pubTime>2017-06-14T09:48:49.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/06/14/%E5%BC%BA%E5%A4%A7%E7%9A%84CSS3%E9%80%89%E6%8B%A9%E5%99%A8/</loc>
+    <lastmod>2017-06-15T03:05:26.904Z</lastmod>
+    <data>
+        <display>
+        <title>强大的CSS3选择器</title>
         <pubTime>2017-06-14T09:48:49.000Z</pubTime>
         
         <tag>CSS3</tag>
@@ -20,19 +37,4 @@
     </url>
 
     
-    
-  <url>
-    <loc>http://yoursite.com/2017/06/13/hello-world/</loc>
-    <lastmod>2017-06-13T01:46:04.860Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2017-06-13T01:46:04.860Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
 </urlset>
