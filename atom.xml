@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-15T03:43:42.792Z</updated>
+  <updated>2017-06-15T04:11:13.904Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,226 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>HTML5本地存储和本地数据库的前世今生</title>
-    <link href="http://yoursite.com/2017/05/12/HTML5%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/"/>
-    <id>http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库的前世今生/</id>
-    <published>2017-05-12T09:48:49.000Z</published>
-    <updated>2017-06-15T03:43:42.792Z</updated>
-    
-    <content type="html"><![CDATA[<p>当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。</p>
-<a id="more"></a>
-<h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
-<p>下面是Cookie的限制：</p>
-<ul>
-<li>大多数浏览器支持最大为 4096 字节的Cookie。</li>
-<li>浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。</li>
-<li>有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。</li>
-<li>Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。</li>
-</ul>
-<p>为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：</p>
-<ul>
-<li>永久性的本地存储（localStorage）</li>
-<li>会话级别的本地存储（sessionStorage）</li>
-</ul>
-<h4 id="二、永久性的本地存储：localStorage"><a href="#二、永久性的本地存储：localStorage" class="headerlink" title="二、永久性的本地存储：localStorage"></a>二、永久性的本地存储：localStorage</h4><p>在最新的JS的API中增加了localStorage对象，以便于用户存储永久存储的Web端的数据。而且数据不会随着Http请求发送到后台服务器，而且存储数据的大小机会不用考虑，因为在HTML5的标准中要求浏览器至少要支持到4MB.所以，这完全是颠覆了Cookie的限制，为Web应用在本地存储复杂的用户痕迹数据提供非常方便的技术支持。接下来就将介绍localStorage的常用的方法。</p>
-<p>localStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
-<ul>
-<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
-<li>getItem(key)通过key获取相应的Value。</li>
-<li>removeItem(key)通过key删除本地数据。</li>
-<li><p>clear()清空数据。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  localStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://www.shiyanlou.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = localStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //localStorage.clear();</div><div class="line">  alert(localStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="三、会话级别的本地存储：sessionStorage"><a href="#三、会话级别的本地存储：sessionStorage" class="headerlink" title="三、会话级别的本地存储：sessionStorage"></a>三、会话级别的本地存储：sessionStorage</h4><p>在HTML5中增加了一个Js对象：sessionStorage；通过此对象可以直接操作存储在浏览器中的会话级别的WebStorage。存储在sessionStorage中的数据首先是Key-Value形式的，另外就是它跟浏览器当前会话相关，当会话结束后，数据会自动清除，跟未设置过期时间的Cookie类似。</p>
-<p>sessionStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
-<ul>
-<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
-<li>getItem(key)通过key获取相应的Value。</li>
-<li>removeItem(key)通过key删除本地数据。</li>
-<li><p>clear()清空数据。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  sessionStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://blog.itjeek.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = sessionStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //sessionStorage.clear();</div><div class="line">  alert(sessionStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
-<h4 id="四、强大的本地数据"><a href="#四、强大的本地数据" class="headerlink" title="四、强大的本地数据"></a>四、强大的本地数据</h4><p>虽然HTML5已经提供了功能强大的localStorage和sessionStorage，但是他们两个都只能提供存储简单数据结构的数据，对于复杂的Web应用的数据却无能为力。逆天的是HTML5提供了一个浏览器端的数据库支持，允许我们直接通JS的API在浏览器端创建一个本地的数据库，而且支持标准的SQL的CRUD操作，让离线的Web应用更加方便的存储结构化的数据。接下里介绍一下本地数据的相关API和用法。</p>
-</li>
-</ul>
-<p>操作本地数据库的最基本的步骤是：</p>
-<ul>
-<li>第一步：openDatabase方法：创建一个访问数据库的对象。</li>
-<li>第二步：使用第一步创建的数据库访问对象来执行transaction方法，通过此方法可以设置一个开启事务成功的事件响应方法，在事件响应方法中可以执行SQL.</li>
-<li>第三步：通过executeSql方法执行查询，当然查询可以是：CRUD。</li>
-</ul>
-<p>接下来分别介绍一下相关的方法的参数和用法。</p>
-<p>1、 openDatabase方法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Demo：获取或者创建一个数据库，如果数据库不存在那么创建之</div><div class="line">var dataBase = openDatabase(<span class="string">"student"</span>, <span class="string">"1.0"</span>, <span class="string">"学生表"</span>, 1024 * 1024, <span class="function"><span class="title">function</span></span> () &#123; &#125;);</div></pre></td></tr></table></figure>
-<p>openDatabase方法打开一个已经存在的数据库，如果数据库不存在，它还可以创建数据库。几个参数意义分别是：</p>
-<ul>
-<li>数据库名称。</li>
-<li>数据库的版本号，目前来说传个1.0就可以了，当然可以不填；</li>
-<li>对数据库的描述。</li>
-<li>设置分配的数据库的大小（单位是kb）。</li>
-<li>回调函数(可省略)。</li>
-</ul>
-<p>初次调用时创建数据库，以后就是建立连接了。</p>
-<p>2.、db.transaction方法</p>
-<p>可以设置一个回调函数，此函数可以接受一个参数就是我们开启的事务的对象。然后通过此对象可以执行SQL脚本。</p>
-<p>3.、executeSql方法执行查询</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ts.executeSql(sqlQuery,[value1,value2..],dataHandler,errorHandler)</div></pre></td></tr></table></figure>
-<p>参数说明：</p>
-<ul>
-<li>qlQuery：需要具体执行的sql语句，可以是create、select、update、delete;</li>
-<li>[value1,value2..]：sql语句中所有使用到的参数的数组，在executeSql方法中，将s&gt;语句中所要使用的参数先用“?”代替，然后依次将这些参数组成数组放在第二个参数中;</li>
-<li>dataHandler：执行成功是调用的回调函数，通过该函数可以获得查询结果集;</li>
-<li>errorHandler：执行失败时调用的回调函数;</li>
-</ul>
-<h4 id="综合实例"><a href="#综合实例" class="headerlink" title="综合实例"></a>综合实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line"> &lt;script src=<span class="string">"Scripts/jquery-1.5.1.js"</span> <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">initDatabase</span></span>() &#123;</div><div class="line">            var db = getCurrentDb();//初始化数据库</div><div class="line">            <span class="keyword">if</span>(!db) &#123;alert(<span class="string">"您的浏览器不支持HTML5本地数据库"</span>);<span class="built_in">return</span>;&#125;</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;//启动一个事务，并设置回调函数</div><div class="line">                //执行创建表的Sql脚本</div><div class="line">                trans.executeSql(<span class="string">"create table if not exists Demo(uName text null,title text null,words text null)"</span>, [], <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">                &#125;, <span class="keyword">function</span> (trans, message) &#123;//消息的回调函数alert(message);&#125;);</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, message) &#123;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        $(<span class="function"><span class="title">function</span></span> () &#123;//页面加载完成后绑定页面按钮的点击事件</div><div class="line">            initDatabase();</div><div class="line">            $(<span class="string">"#btnSave"</span>).click(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">                var txtName = $(<span class="string">"#txtName"</span>).val();</div><div class="line">                var txtTitle = $(<span class="string">"#txtTitle"</span>).val();</div><div class="line">                var txtWords = $(<span class="string">"#txtWords"</span>).val();</div><div class="line">                var db = getCurrentDb();</div><div class="line">                //执行sql脚本，插入数据</div><div class="line">                db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                    trans.executeSql(<span class="string">"insert into Demo(uName,title,words) values(?,?,?) "</span>, [txtName, txtTitle, txtWords], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    &#125;, <span class="keyword">function</span> (ts, message) &#123;</div><div class="line">                        alert(message);</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">                showAllTheData();</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">getCurrentDb</span></span>() &#123;</div><div class="line">            //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小</div><div class="line">            //如果数据库不存在那么创建之</div><div class="line">            var db = openDatabase(<span class="string">"myDb"</span>, <span class="string">"1.0"</span>, <span class="string">"it's to save demo data!"</span>, 1024 * 1024); ;</div><div class="line">            <span class="built_in">return</span> db;</div><div class="line">        &#125;</div><div class="line">        //显示所有数据库中的数据到页面上去</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">showAllTheData</span></span>() &#123;</div><div class="line">            $(<span class="string">"#tblData"</span>).empty();</div><div class="line">            var db = getCurrentDb();</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                trans.executeSql(<span class="string">"select * from Demo "</span>, [], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    <span class="keyword">if</span> (data) &#123;</div><div class="line">                        <span class="keyword">for</span> (var i = 0; i &lt; data.rows.length; i++) &#123;</div><div class="line">                            appendDataToTable(data.rows.item(i));//获取某行数据的json对象</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;, <span class="keyword">function</span> (ts, message) &#123;alert(message);var tst = message;&#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">function</span> appendDataToTable(data) &#123;//将数据展示到表格里面</div><div class="line">            //uName,title,words</div><div class="line">            var txtName = data.uName;</div><div class="line">            var txtTitle = data.title;</div><div class="line">            var words = data.words;</div><div class="line">            var strHtml = <span class="string">""</span>;</div><div class="line">            strHtml += <span class="string">"&lt;tr&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span>+txtName+<span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + txtTitle + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + words + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;/tr&gt;"</span>;</div><div class="line">            $(<span class="string">"#tblData"</span>).append(strHtml);</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;table&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;用户名：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtName"</span> id=<span class="string">"txtName"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">               &lt;tr&gt;</div><div class="line">                &lt;td&gt;标题：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtTitle"</span> id=<span class="string">"txtTitle"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;留言：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtWords"</span> id=<span class="string">"txtWords"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"保存"</span> id=<span class="string">"btnSave"</span>/&gt;</div><div class="line">        &lt;hr/&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"展示所哟数据"</span> onclick=<span class="string">"showAllTheData();"</span>/&gt;</div><div class="line">        &lt;table id=<span class="string">"tblData"</span>&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-<p><strong> 作者：<a href="http://www.jianshu.com/u/b7dc6ae92940" target="_blank" rel="external">如山间清爽的风</a> </strong><br><strong> 原文地址：<a href="http://www.jianshu.com/p/f9b5bc2e6b85" target="_blank" rel="external">http://www.jianshu.com/p/f9b5bc2e6b85</a></strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="HTML5" scheme="http://yoursite.com/tags/HTML5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>经典JS闭包面试题</title>
-    <link href="http://yoursite.com/2017/04/12/%E7%BB%8F%E5%85%B8JS%E9%97%AD%E5%8C%85%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2017/04/12/经典JS闭包面试题/</id>
-    <published>2017-04-12T09:45:49.000Z</published>
-    <updated>2017-06-15T03:37:32.591Z</updated>
-    
-    <content type="html"><![CDATA[<p>闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。</p>
-<a id="more"></a>
-<h2 id="由工作中演变而来的面试题"><a href="#由工作中演变而来的面试题" class="headerlink" title="由工作中演变而来的面试题"></a>由工作中演变而来的面试题</h2><p>这是一个我工作当中的遇到的一个问题，似乎很有趣，就当做了一道题去面试，发现几乎没人能全部答对并说出原因，遂拿出来聊一聊吧。</p>
-<p>先看题目代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
-<p>这是一道非常典型的JS闭包问题。其中嵌套了三层<code>fun</code>函数，搞清楚每层<code>fun</code>的函数是那个<code>fun</code>函数尤为重要。</p>
-<p>可以先在纸上或其他地方写下你认为的结果，然后展开看看正确答案是什么？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//答案：</div><div class="line">//a: undefined,0,0,0</div><div class="line">//b: undefined,0,1,2</div><div class="line">//c: undefined,0,1,1</div></pre></td></tr></table></figure>
-<p>都答对了么？如果都答对了恭喜你在js闭包问题当中几乎没什么可以难住你了；如果没有答对，继续往下分析。</p>
-<h2 id="JS中有几种函数"><a href="#JS中有几种函数" class="headerlink" title="JS中有几种函数"></a>JS中有几种函数</h2><p>首先，在此之前需要了解的是，在JS中函数可以分为两种，<strong>具名函数（命名函数）</strong>和<strong>匿名函数</strong>。</p>
-<p>区分这两种函数的方法非常简单，可以通过输出<code>fn.name</code>来判断，有name的就是具名函数，没有name的就是匿名函数。</p>
-<blockquote>
-<p>注意：在低版本IE上无法获取具名函数的name，会返回undefined，建议在火狐或是谷歌浏览器上测试。</p>
-</blockquote>
-<p>或是采用兼容IE的获取函数<code>name</code>方法来获取函数名称：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 获取指定函数的函数名称（用于兼容IE）</div><div class="line">    * @param &#123;Function&#125; fun 任意函数</div><div class="line">    */</div><div class="line"><span class="keyword">function</span> getFunctionName(fun) &#123;</div><div class="line">    <span class="keyword">if</span> (fun.name !== undefined)</div><div class="line">        <span class="built_in">return</span> fun.name;</div><div class="line">    var ret = fun.toString();</div><div class="line">    ret = ret.substr(<span class="string">'function '</span>.length);</div><div class="line">    ret = ret.substr(0, ret.indexOf(<span class="string">'('</span>));</div><div class="line">    <span class="built_in">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>遂用上述函数测试是否为匿名函数：</p>
-<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-e9995a01ed05d416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
-
-<p>可以得知变量<code>fn1</code>是具名函数，<code>fn2</code>是匿名函数。</p>
-<h2 id="创建函数的几种方式"><a href="#创建函数的几种方式" class="headerlink" title="创建函数的几种方式"></a>创建函数的几种方式</h2><p>说完函数的类型，还需要了解JS中创建函数都有几种创建方法。</p>
-<p><strong>1、声明函数</strong></p>
-<p>最普通最标准的声明函数方法，包括函数名及函数体。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;&#125;</div></pre></td></tr></table></figure>
-<p><strong>2、创建匿名函数表达式</strong></p>
-<p>创建一个变量，这个变量的内容为一个函数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;</div></pre></td></tr></table></figure>
-<p>注意采用这种方法创建的函数为<strong>匿名函数</strong>，即没有函数<code>name</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;;</div><div class="line">getFunctionName(fn1).length;//0</div></pre></td></tr></table></figure>
-<p><strong>3、创建具名函数表达式</strong></p>
-<p>创建一个变量，内容为一个带有名称的函数。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;&#125;;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：具名函数表达式的函数名只能在创建函数内部使用</p>
-</blockquote>
-<p>即采用此种方法创建的函数在函数外层只能使用fn1不能使用xxcanghai的函数名。xxcanghai的命名只能在创建的函数内部使用。</p>
-<p>测试：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"in:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">&#125;;</div><div class="line">console.log(<span class="string">"out:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">fn1();</div><div class="line">//out:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; undefined &gt;</div><div class="line">//<span class="keyword">in</span>:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; <span class="keyword">function</span> &gt;</div></pre></td></tr></table></figure>
-<p>可以看到在函数外部（out）无法使用xxcanghai的函数名，为undefined。</p>
-<blockquote>
-<p>注意：在对象内定义函数如<code>var o={ fn : function (){…} }</code>，也属于函数表达式。</p>
-</blockquote>
-<p><strong>4、Function构造函数</strong></p>
-<p>可以给 <code>Function</code> 构造函数传一个函数字符串，返回包含这个字符串命令的函数，此种方法创建的是<strong>匿名函数</strong>。</p>
-<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-1ba53a0815064f6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
-
-<p><strong>5、自执行函数</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="title">function</span></span>()&#123;alert(1);&#125;)();</div><div class="line">(<span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;alert(1);&#125;)();</div></pre></td></tr></table></figure>
-<p>自执行函数属于上述的“函数表达式”，规则相同</p>
-<p><strong>6、其他创建函数的方法</strong></p>
-<p>当然还有其他创建函数或执行函数的方法，这里不再多说，比如采用 <code>eval</code> ， <code>setTimeout</code> ， <code>setInterval</code> 等非常用方法，这里不做过多介绍，属于非标准方法，这里不做过多展开。</p>
-<h2 id="三个fun函数的关系是什么？"><a href="#三个fun函数的关系是什么？" class="headerlink" title="三个fun函数的关系是什么？"></a>三个fun函数的关系是什么？</h2><p>说完函数类型与创建函数的方法后，就可以回归主题，看这道面试题。</p>
-<p>这段代码中出现了三个<code>fun</code>函数，所以第一步先搞清楚，这三个<code>fun</code>函数的关系，哪个函数与哪个函数是相同的。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      //...</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>先看第一个<code>fun</code>函数，属于标准具名函数声明，是<strong>新创建</strong>的函数，他的返回值是一个对象字面量表达式，属于一个新的object。</p>
-<p>这个新的对象内部包含一个也叫<code>fun</code>的属性，通过上述介绍可得知，属于匿名函数表达式，即<code>fun</code>这个属性中存放的是一个<strong>新创建</strong>匿名函数表达式。</p>
-<blockquote>
-<p>注意：所有<strong>声明的匿名函数都是一个新函数。</strong></p>
-</blockquote>
-<p>所以第一个<code>fun</code>函数与第二个<code>fun</code>函数不相同，均为新创建的函数。</p>
-<h2 id="函数作用域链的问题"><a href="#函数作用域链的问题" class="headerlink" title="函数作用域链的问题"></a>函数作用域链的问题</h2><p>再说第三个<code>fun</code>函数之前需要先说下，在<em>函数表达式</em>内部能不能访问存放当前函数的变量。</p>
-<p><strong>测试1，对象内部的函数表达式：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">bash</div><div class="line">var o=&#123;</div><div class="line">  fn:<span class="function"><span class="title">function</span></span> ()&#123;</div><div class="line">    console.log(fn);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">o.fn();//ERROR报错</div></pre></td></tr></table></figure>
-<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-b119cb7ac30d142e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
-
-<p><strong>测试2，非对象内部的函数表达式：</strong></p>
-<p>var fn=function (){<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  console.log(fn);</div><div class="line">&#125;;</div><div class="line">fn();//<span class="function"><span class="title">function</span></span> ()&#123;console.log(fn);&#125;;正确</div></pre></td></tr></table></figure></p>
-<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-ff61db72e84f3caf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
-
-<p>结论是：使用var或是非对象内部的函数表达式内，可以访问到存放当前函数的变量；在对象内部的不能访问到。</p>
-<p>原因也非常简单，因为<strong>函数作用域链</strong>的问题，采用var的是在外部创建了一个fn变量，函数内部当然可以在内部寻找不到fn后向上册作用域查找fn，而在创建对象内部时，因为没有在函数作用域内创建fn，所以无法访问。</p>
-<p>所以综上所述，可以得知，<strong>最内层的return出去的<code>fun</code>函数不是第二层<code>fun</code>函数，是最外层的<code>fun</code>函数</strong>。</p>
-<p>所以，三个<code>fun</code>函数的关系也理清楚了，第一个等于第三个，他们都不等于第二个。</p>
-<h2 id="到底在调用哪个函数？"><a href="#到底在调用哪个函数？" class="headerlink" title="到底在调用哪个函数？"></a>到底在调用哪个函数？</h2><p>再看下原题，现在知道了程序中有两个<code>fun</code>函数(第一个和第三个相同)，遂接下来的问题是搞清楚，运行时他执行的是哪个<code>fun</code>函数？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
-<p><strong>1、第一行a</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var a = fun(0); a.fun(1); a.fun(2); a.fun(3);</div></pre></td></tr></table></figure>
-<p>可以得知，第一个<code>fun(0)</code>是在调用<strong>第一层<code>fun</code>函数</strong>。第二个<code>fun(1)</code>是在调用前一个<code>fun</code>的返回值的<code>fun</code>函数，所以：<br>第后面几个<code>fun(1)</code>,<code>fun(2)</code>,<code>fun(3)</code>,函数都是在调用<strong>第二层<code>fun</code>函数</strong>。</p>
-<p>遂：</p>
-<p>在第一次调用<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
-<p>第二次调用<code>fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
-<p>第三次调用<code>fun(2)</code>时<code>m</code>为<code>2</code>，但依然是调用<code>a.fun</code>，所以还是闭包了第一次调用时的n，所以内部调用第一层的<code>fun(2,0);</code>所以<code>o</code>为<code>0</code></p>
-<p>第四次同理；</p>
-<p>即：最终答案为<code>undefined,0,0,0</code></p>
-<p><strong>2、第二行b</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
-<p>先从<code>fun(0)</code>开始看，肯定是调用的第一层<code>fun</code>函数；而他的返回值是一个对象，所以第二个<code>fun(1)</code>调用的是第二层<code>fun</code>函数，后面几个也是调用的第二层<code>fun</code>函数。</p>
-<p>遂：</p>
-<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
-<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
-<p>第三次调用 <code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时当前的<code>fun</code>函数不是第一次执行的返回对象，而是<strong>第二次执行的返回对象</strong>。而在第二次执行第一层<code>fun</code>函数时时<code>(1,0)</code>所以<code>n=1</code>,<code>o=0</code>,返回时闭包了第二次的<code>n</code>，遂在第三次调用第三层<code>fun</code>函数时<code>m=2</code>,<code>n=1</code>，即调用第一层<code>fun</code>函数<code>fun(2,1)</code>，所以<code>o</code>为<code>1</code>；</p>
-<p>第四次调用 <code>.fun(3)</code>时<code>m</code>为<code>3</code>，闭包了第三次调用的<code>n</code>，同理，最终调用第一层<code>fun</code>函数为<code>fun(3,2)</code>；所以<code>o</code>为<code>2</code>；</p>
-<p>即最终答案：<code>undefined,0,1,2</code></p>
-<p><strong>3、第三行c</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var c = fun(0).fun(1); c.fun(2); c.fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
-<p>根据前面两个例子，可以得知：</p>
-<p><code>fun(0)</code>为执行第一层<code>fun</code>函数，<code>.fun(1)</code>执行的是<code>fun(0)</code>返回的第二层<code>fun</code>函数，这里语句结束，遂<code>c</code>存放的是<code>fun(1)</code>的返回值，而不是<code>fun(0)</code>的返回值，所以<code>c</code>中闭包的也是<code>fun(1)</code>第二次执行的<code>n</code>的值。<code>c.fun(2)</code>执行的是<code>fun(1)</code>返回的第二层<code>fun函数</code>，<code>c.fun(3)</code>执行的<strong>也</strong>是<code>fun(1)</code>返回的第二层<code>fun</code>函数。</p>
-<p>遂：</p>
-<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
-<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
-<p>第三次调用<code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时<code>fun</code>闭包的是第二次调用的<code>n=1</code>，即<code>m=2</code>，<code>n=1</code>，并在内部调用第一层<code>fun</code>函数<code>fun(2,1);</code>所以<code>o</code>为<code>1</code>；</p>
-<p>第四次<code>.fun(3)</code>时同理，但依然是调用的第二次的返回值，遂最终调用第一层<code>fun</code>函数<code>fun(3,1)</code>，所以<code>o</code>还为<code>1</code></p>
-<p>即最终答案：<code>undefined,0,1,1</code></p>
-<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>这段代码原本是在做一个将异步回调改写为同步调用的组件时的代码，发现了这个坑，对JS的闭包有了更深入的了解。</p>
-<p>关于什么是闭包，网上的文章数不胜数，但理解什么是闭包还是要在代码中自己去发现与领悟。</p>
-<p>如果要我说什么是闭包，我认为，广义上的闭包就是指一个变量在他自身作用域外被使用了，就叫发生了闭包。</p>
-<p>希望读者能通过本文对闭包现象有进一步的了解，如有其它见解或看法，欢迎指正或留言讨论。</p>
-<p><strong> 作者：<a href="http://www.cnblogs.com/xxcanghai/" target="_blank" rel="external">小小沧海</a>  </strong><br><strong> 原文地址：<a href="http://www.cnblogs.com/xxcanghai/p/4991870.html" target="_blank" rel="external">http://www.cnblogs.com/xxcanghai/p/4991870.html</a> </strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
     <title>常见布局</title>
-    <link href="http://yoursite.com/2017/03/12/%E7%A7%BB%E5%8A%A8Web%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%B8%83%E5%B1%80%E6%96%B9%E5%BC%8F%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2017/03/12/移动Web开发中的常见布局方式及一些常见问题/</id>
-    <published>2017-03-12T09:47:49.000Z</published>
-    <updated>2017-06-15T04:09:45.657Z</updated>
+    <link href="http://yoursite.com/2017/06/12/%E7%A7%BB%E5%8A%A8Web%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%B8%83%E5%B1%80%E6%96%B9%E5%BC%8F%E5%8F%8A%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/06/12/移动Web开发中的常见布局方式及一些常见问题/</id>
+    <published>2017-06-12T09:47:49.000Z</published>
+    <updated>2017-06-15T04:11:13.904Z</updated>
     
     <content type="html"><![CDATA[<p>目前针对web前端页面的设计主要分为pc端和移动端页面，针对不同的页面我们可能会采取不同的布局格式，在整个布局的选择上，没有一成不变的，也没有任何一种布局能够满足各个方面的需要，在众多的布局方式中，我这边主要针对以下几种布局方式简单的发表一下个人的看法。</p>
 <a id="more"></a>
@@ -536,6 +321,221 @@
     
     
       <category term="移动端" scheme="http://yoursite.com/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTML5本地存储和本地数据库的前世今生</title>
+    <link href="http://yoursite.com/2017/05/12/HTML5%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/"/>
+    <id>http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库的前世今生/</id>
+    <published>2017-05-12T09:48:49.000Z</published>
+    <updated>2017-06-15T03:43:42.792Z</updated>
+    
+    <content type="html"><![CDATA[<p>当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。</p>
+<a id="more"></a>
+<h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
+<p>下面是Cookie的限制：</p>
+<ul>
+<li>大多数浏览器支持最大为 4096 字节的Cookie。</li>
+<li>浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。</li>
+<li>有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。</li>
+<li>Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。</li>
+</ul>
+<p>为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：</p>
+<ul>
+<li>永久性的本地存储（localStorage）</li>
+<li>会话级别的本地存储（sessionStorage）</li>
+</ul>
+<h4 id="二、永久性的本地存储：localStorage"><a href="#二、永久性的本地存储：localStorage" class="headerlink" title="二、永久性的本地存储：localStorage"></a>二、永久性的本地存储：localStorage</h4><p>在最新的JS的API中增加了localStorage对象，以便于用户存储永久存储的Web端的数据。而且数据不会随着Http请求发送到后台服务器，而且存储数据的大小机会不用考虑，因为在HTML5的标准中要求浏览器至少要支持到4MB.所以，这完全是颠覆了Cookie的限制，为Web应用在本地存储复杂的用户痕迹数据提供非常方便的技术支持。接下来就将介绍localStorage的常用的方法。</p>
+<p>localStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  localStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://www.shiyanlou.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = localStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //localStorage.clear();</div><div class="line">  alert(localStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="三、会话级别的本地存储：sessionStorage"><a href="#三、会话级别的本地存储：sessionStorage" class="headerlink" title="三、会话级别的本地存储：sessionStorage"></a>三、会话级别的本地存储：sessionStorage</h4><p>在HTML5中增加了一个Js对象：sessionStorage；通过此对象可以直接操作存储在浏览器中的会话级别的WebStorage。存储在sessionStorage中的数据首先是Key-Value形式的，另外就是它跟浏览器当前会话相关，当会话结束后，数据会自动清除，跟未设置过期时间的Cookie类似。</p>
+<p>sessionStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  sessionStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://blog.itjeek.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = sessionStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //sessionStorage.clear();</div><div class="line">  alert(sessionStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h4 id="四、强大的本地数据"><a href="#四、强大的本地数据" class="headerlink" title="四、强大的本地数据"></a>四、强大的本地数据</h4><p>虽然HTML5已经提供了功能强大的localStorage和sessionStorage，但是他们两个都只能提供存储简单数据结构的数据，对于复杂的Web应用的数据却无能为力。逆天的是HTML5提供了一个浏览器端的数据库支持，允许我们直接通JS的API在浏览器端创建一个本地的数据库，而且支持标准的SQL的CRUD操作，让离线的Web应用更加方便的存储结构化的数据。接下里介绍一下本地数据的相关API和用法。</p>
+</li>
+</ul>
+<p>操作本地数据库的最基本的步骤是：</p>
+<ul>
+<li>第一步：openDatabase方法：创建一个访问数据库的对象。</li>
+<li>第二步：使用第一步创建的数据库访问对象来执行transaction方法，通过此方法可以设置一个开启事务成功的事件响应方法，在事件响应方法中可以执行SQL.</li>
+<li>第三步：通过executeSql方法执行查询，当然查询可以是：CRUD。</li>
+</ul>
+<p>接下来分别介绍一下相关的方法的参数和用法。</p>
+<p>1、 openDatabase方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Demo：获取或者创建一个数据库，如果数据库不存在那么创建之</div><div class="line">var dataBase = openDatabase(<span class="string">"student"</span>, <span class="string">"1.0"</span>, <span class="string">"学生表"</span>, 1024 * 1024, <span class="function"><span class="title">function</span></span> () &#123; &#125;);</div></pre></td></tr></table></figure>
+<p>openDatabase方法打开一个已经存在的数据库，如果数据库不存在，它还可以创建数据库。几个参数意义分别是：</p>
+<ul>
+<li>数据库名称。</li>
+<li>数据库的版本号，目前来说传个1.0就可以了，当然可以不填；</li>
+<li>对数据库的描述。</li>
+<li>设置分配的数据库的大小（单位是kb）。</li>
+<li>回调函数(可省略)。</li>
+</ul>
+<p>初次调用时创建数据库，以后就是建立连接了。</p>
+<p>2.、db.transaction方法</p>
+<p>可以设置一个回调函数，此函数可以接受一个参数就是我们开启的事务的对象。然后通过此对象可以执行SQL脚本。</p>
+<p>3.、executeSql方法执行查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ts.executeSql(sqlQuery,[value1,value2..],dataHandler,errorHandler)</div></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>qlQuery：需要具体执行的sql语句，可以是create、select、update、delete;</li>
+<li>[value1,value2..]：sql语句中所有使用到的参数的数组，在executeSql方法中，将s&gt;语句中所要使用的参数先用“?”代替，然后依次将这些参数组成数组放在第二个参数中;</li>
+<li>dataHandler：执行成功是调用的回调函数，通过该函数可以获得查询结果集;</li>
+<li>errorHandler：执行失败时调用的回调函数;</li>
+</ul>
+<h4 id="综合实例"><a href="#综合实例" class="headerlink" title="综合实例"></a>综合实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line"> &lt;script src=<span class="string">"Scripts/jquery-1.5.1.js"</span> <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">initDatabase</span></span>() &#123;</div><div class="line">            var db = getCurrentDb();//初始化数据库</div><div class="line">            <span class="keyword">if</span>(!db) &#123;alert(<span class="string">"您的浏览器不支持HTML5本地数据库"</span>);<span class="built_in">return</span>;&#125;</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;//启动一个事务，并设置回调函数</div><div class="line">                //执行创建表的Sql脚本</div><div class="line">                trans.executeSql(<span class="string">"create table if not exists Demo(uName text null,title text null,words text null)"</span>, [], <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">                &#125;, <span class="keyword">function</span> (trans, message) &#123;//消息的回调函数alert(message);&#125;);</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, message) &#123;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        $(<span class="function"><span class="title">function</span></span> () &#123;//页面加载完成后绑定页面按钮的点击事件</div><div class="line">            initDatabase();</div><div class="line">            $(<span class="string">"#btnSave"</span>).click(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">                var txtName = $(<span class="string">"#txtName"</span>).val();</div><div class="line">                var txtTitle = $(<span class="string">"#txtTitle"</span>).val();</div><div class="line">                var txtWords = $(<span class="string">"#txtWords"</span>).val();</div><div class="line">                var db = getCurrentDb();</div><div class="line">                //执行sql脚本，插入数据</div><div class="line">                db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                    trans.executeSql(<span class="string">"insert into Demo(uName,title,words) values(?,?,?) "</span>, [txtName, txtTitle, txtWords], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    &#125;, <span class="keyword">function</span> (ts, message) &#123;</div><div class="line">                        alert(message);</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">                showAllTheData();</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">getCurrentDb</span></span>() &#123;</div><div class="line">            //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小</div><div class="line">            //如果数据库不存在那么创建之</div><div class="line">            var db = openDatabase(<span class="string">"myDb"</span>, <span class="string">"1.0"</span>, <span class="string">"it's to save demo data!"</span>, 1024 * 1024); ;</div><div class="line">            <span class="built_in">return</span> db;</div><div class="line">        &#125;</div><div class="line">        //显示所有数据库中的数据到页面上去</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">showAllTheData</span></span>() &#123;</div><div class="line">            $(<span class="string">"#tblData"</span>).empty();</div><div class="line">            var db = getCurrentDb();</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                trans.executeSql(<span class="string">"select * from Demo "</span>, [], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    <span class="keyword">if</span> (data) &#123;</div><div class="line">                        <span class="keyword">for</span> (var i = 0; i &lt; data.rows.length; i++) &#123;</div><div class="line">                            appendDataToTable(data.rows.item(i));//获取某行数据的json对象</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;, <span class="keyword">function</span> (ts, message) &#123;alert(message);var tst = message;&#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">function</span> appendDataToTable(data) &#123;//将数据展示到表格里面</div><div class="line">            //uName,title,words</div><div class="line">            var txtName = data.uName;</div><div class="line">            var txtTitle = data.title;</div><div class="line">            var words = data.words;</div><div class="line">            var strHtml = <span class="string">""</span>;</div><div class="line">            strHtml += <span class="string">"&lt;tr&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span>+txtName+<span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + txtTitle + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + words + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;/tr&gt;"</span>;</div><div class="line">            $(<span class="string">"#tblData"</span>).append(strHtml);</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;table&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;用户名：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtName"</span> id=<span class="string">"txtName"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">               &lt;tr&gt;</div><div class="line">                &lt;td&gt;标题：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtTitle"</span> id=<span class="string">"txtTitle"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;留言：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtWords"</span> id=<span class="string">"txtWords"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"保存"</span> id=<span class="string">"btnSave"</span>/&gt;</div><div class="line">        &lt;hr/&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"展示所哟数据"</span> onclick=<span class="string">"showAllTheData();"</span>/&gt;</div><div class="line">        &lt;table id=<span class="string">"tblData"</span>&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><strong> 作者：<a href="http://www.jianshu.com/u/b7dc6ae92940" target="_blank" rel="external">如山间清爽的风</a> </strong><br><strong> 原文地址：<a href="http://www.jianshu.com/p/f9b5bc2e6b85" target="_blank" rel="external">http://www.jianshu.com/p/f9b5bc2e6b85</a></strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当我们在提及web前端本地存储的时候，首先需要介绍一下本地化存储的概念和历史。本地化存储从来不是一个新奇的概念，因为web应用程序一直在追求的就是媲美甚至超越桌面应用程序。但是桌面应用程序一直优于web应用程序一个很重要的原因是它的本地化存储得到了很好的支持。对于本地应用程序，操作系统会提供一个抽象层，用于存储和获取特定于应用程序的数据，这些数据可以存储于注册表、INI文件，或者其他什么地方，这取决于操作系统的实现，如果本地应用程序需要不单是键值对形式的本地存储，可以使用嵌入式数据库或其他很多种解决方案。而对于web应用程序，它的本地存储一步一步走到今天的HTML5本地存储是非常不容易的。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="HTML5" scheme="http://yoursite.com/tags/HTML5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>经典JS闭包面试题</title>
+    <link href="http://yoursite.com/2017/04/12/%E7%BB%8F%E5%85%B8JS%E9%97%AD%E5%8C%85%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/04/12/经典JS闭包面试题/</id>
+    <published>2017-04-12T09:45:49.000Z</published>
+    <updated>2017-06-15T03:37:32.591Z</updated>
+    
+    <content type="html"><![CDATA[<p>闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。</p>
+<a id="more"></a>
+<h2 id="由工作中演变而来的面试题"><a href="#由工作中演变而来的面试题" class="headerlink" title="由工作中演变而来的面试题"></a>由工作中演变而来的面试题</h2><p>这是一个我工作当中的遇到的一个问题，似乎很有趣，就当做了一道题去面试，发现几乎没人能全部答对并说出原因，遂拿出来聊一聊吧。</p>
+<p>先看题目代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
+<p>这是一道非常典型的JS闭包问题。其中嵌套了三层<code>fun</code>函数，搞清楚每层<code>fun</code>的函数是那个<code>fun</code>函数尤为重要。</p>
+<p>可以先在纸上或其他地方写下你认为的结果，然后展开看看正确答案是什么？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//答案：</div><div class="line">//a: undefined,0,0,0</div><div class="line">//b: undefined,0,1,2</div><div class="line">//c: undefined,0,1,1</div></pre></td></tr></table></figure>
+<p>都答对了么？如果都答对了恭喜你在js闭包问题当中几乎没什么可以难住你了；如果没有答对，继续往下分析。</p>
+<h2 id="JS中有几种函数"><a href="#JS中有几种函数" class="headerlink" title="JS中有几种函数"></a>JS中有几种函数</h2><p>首先，在此之前需要了解的是，在JS中函数可以分为两种，<strong>具名函数（命名函数）</strong>和<strong>匿名函数</strong>。</p>
+<p>区分这两种函数的方法非常简单，可以通过输出<code>fn.name</code>来判断，有name的就是具名函数，没有name的就是匿名函数。</p>
+<blockquote>
+<p>注意：在低版本IE上无法获取具名函数的name，会返回undefined，建议在火狐或是谷歌浏览器上测试。</p>
+</blockquote>
+<p>或是采用兼容IE的获取函数<code>name</code>方法来获取函数名称：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 获取指定函数的函数名称（用于兼容IE）</div><div class="line">    * @param &#123;Function&#125; fun 任意函数</div><div class="line">    */</div><div class="line"><span class="keyword">function</span> getFunctionName(fun) &#123;</div><div class="line">    <span class="keyword">if</span> (fun.name !== undefined)</div><div class="line">        <span class="built_in">return</span> fun.name;</div><div class="line">    var ret = fun.toString();</div><div class="line">    ret = ret.substr(<span class="string">'function '</span>.length);</div><div class="line">    ret = ret.substr(0, ret.indexOf(<span class="string">'('</span>));</div><div class="line">    <span class="built_in">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>遂用上述函数测试是否为匿名函数：</p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-e9995a01ed05d416.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p>可以得知变量<code>fn1</code>是具名函数，<code>fn2</code>是匿名函数。</p>
+<h2 id="创建函数的几种方式"><a href="#创建函数的几种方式" class="headerlink" title="创建函数的几种方式"></a>创建函数的几种方式</h2><p>说完函数的类型，还需要了解JS中创建函数都有几种创建方法。</p>
+<p><strong>1、声明函数</strong></p>
+<p>最普通最标准的声明函数方法，包括函数名及函数体。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;&#125;</div></pre></td></tr></table></figure>
+<p><strong>2、创建匿名函数表达式</strong></p>
+<p>创建一个变量，这个变量的内容为一个函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;</div></pre></td></tr></table></figure>
+<p>注意采用这种方法创建的函数为<strong>匿名函数</strong>，即没有函数<code>name</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="function"><span class="title">function</span></span> ()&#123;&#125;;</div><div class="line">getFunctionName(fn1).length;//0</div></pre></td></tr></table></figure>
+<p><strong>3、创建具名函数表达式</strong></p>
+<p>创建一个变量，内容为一个带有名称的函数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：具名函数表达式的函数名只能在创建函数内部使用</p>
+</blockquote>
+<p>即采用此种方法创建的函数在函数外层只能使用fn1不能使用xxcanghai的函数名。xxcanghai的命名只能在创建的函数内部使用。</p>
+<p>测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var fn1=<span class="keyword">function</span> <span class="function"><span class="title">xxcanghai</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"in:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">&#125;;</div><div class="line">console.log(<span class="string">"out:fn1&lt;"</span>,typeof fn1,<span class="string">"&gt;xxcanghai:&lt;"</span>,typeof xxcanghai,<span class="string">"&gt;"</span>);</div><div class="line">fn1();</div><div class="line">//out:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; undefined &gt;</div><div class="line">//<span class="keyword">in</span>:fn1&lt; <span class="keyword">function</span> &gt;xxcanghai:&lt; <span class="keyword">function</span> &gt;</div></pre></td></tr></table></figure>
+<p>可以看到在函数外部（out）无法使用xxcanghai的函数名，为undefined。</p>
+<blockquote>
+<p>注意：在对象内定义函数如<code>var o={ fn : function (){…} }</code>，也属于函数表达式。</p>
+</blockquote>
+<p><strong>4、Function构造函数</strong></p>
+<p>可以给 <code>Function</code> 构造函数传一个函数字符串，返回包含这个字符串命令的函数，此种方法创建的是<strong>匿名函数</strong>。</p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-1ba53a0815064f6d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p><strong>5、自执行函数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="title">function</span></span>()&#123;alert(1);&#125;)();</div><div class="line">(<span class="keyword">function</span> <span class="function"><span class="title">fn1</span></span>()&#123;alert(1);&#125;)();</div></pre></td></tr></table></figure>
+<p>自执行函数属于上述的“函数表达式”，规则相同</p>
+<p><strong>6、其他创建函数的方法</strong></p>
+<p>当然还有其他创建函数或执行函数的方法，这里不再多说，比如采用 <code>eval</code> ， <code>setTimeout</code> ， <code>setInterval</code> 等非常用方法，这里不做过多介绍，属于非标准方法，这里不做过多展开。</p>
+<h2 id="三个fun函数的关系是什么？"><a href="#三个fun函数的关系是什么？" class="headerlink" title="三个fun函数的关系是什么？"></a>三个fun函数的关系是什么？</h2><p>说完函数类型与创建函数的方法后，就可以回归主题，看这道面试题。</p>
+<p>这段代码中出现了三个<code>fun</code>函数，所以第一步先搞清楚，这三个<code>fun</code>函数的关系，哪个函数与哪个函数是相同的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      //...</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先看第一个<code>fun</code>函数，属于标准具名函数声明，是<strong>新创建</strong>的函数，他的返回值是一个对象字面量表达式，属于一个新的object。</p>
+<p>这个新的对象内部包含一个也叫<code>fun</code>的属性，通过上述介绍可得知，属于匿名函数表达式，即<code>fun</code>这个属性中存放的是一个<strong>新创建</strong>匿名函数表达式。</p>
+<blockquote>
+<p>注意：所有<strong>声明的匿名函数都是一个新函数。</strong></p>
+</blockquote>
+<p>所以第一个<code>fun</code>函数与第二个<code>fun</code>函数不相同，均为新创建的函数。</p>
+<h2 id="函数作用域链的问题"><a href="#函数作用域链的问题" class="headerlink" title="函数作用域链的问题"></a>函数作用域链的问题</h2><p>再说第三个<code>fun</code>函数之前需要先说下，在<em>函数表达式</em>内部能不能访问存放当前函数的变量。</p>
+<p><strong>测试1，对象内部的函数表达式：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">bash</div><div class="line">var o=&#123;</div><div class="line">  fn:<span class="function"><span class="title">function</span></span> ()&#123;</div><div class="line">    console.log(fn);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">o.fn();//ERROR报错</div></pre></td></tr></table></figure>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-b119cb7ac30d142e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p><strong>测试2，非对象内部的函数表达式：</strong></p>
+<p>var fn=function (){<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  console.log(fn);</div><div class="line">&#125;;</div><div class="line">fn();//<span class="function"><span class="title">function</span></span> ()&#123;console.log(fn);&#125;;正确</div></pre></td></tr></table></figure></p>
+<div class="image-package"><img src="http://upload-images.jianshu.io/upload_images/675733-ff61db72e84f3caf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br></div>
+
+<p>结论是：使用var或是非对象内部的函数表达式内，可以访问到存放当前函数的变量；在对象内部的不能访问到。</p>
+<p>原因也非常简单，因为<strong>函数作用域链</strong>的问题，采用var的是在外部创建了一个fn变量，函数内部当然可以在内部寻找不到fn后向上册作用域查找fn，而在创建对象内部时，因为没有在函数作用域内创建fn，所以无法访问。</p>
+<p>所以综上所述，可以得知，<strong>最内层的return出去的<code>fun</code>函数不是第二层<code>fun</code>函数，是最外层的<code>fun</code>函数</strong>。</p>
+<p>所以，三个<code>fun</code>函数的关系也理清楚了，第一个等于第三个，他们都不等于第二个。</p>
+<h2 id="到底在调用哪个函数？"><a href="#到底在调用哪个函数？" class="headerlink" title="到底在调用哪个函数？"></a>到底在调用哪个函数？</h2><p>再看下原题，现在知道了程序中有两个<code>fun</code>函数(第一个和第三个相同)，遂接下来的问题是搞清楚，运行时他执行的是哪个<code>fun</code>函数？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> fun(n,o) &#123;</div><div class="line">  console.log(o)</div><div class="line">  <span class="built_in">return</span> &#123;</div><div class="line">    fun:<span class="keyword">function</span>(m)&#123;</div><div class="line">      <span class="built_in">return</span> fun(m,n);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,?,?,?</div><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div><div class="line">var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,?,?,?</div><div class="line">//问:三行a,b,c的输出分别是什么？</div></pre></td></tr></table></figure>
+<p><strong>1、第一行a</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var a = fun(0); a.fun(1); a.fun(2); a.fun(3);</div></pre></td></tr></table></figure>
+<p>可以得知，第一个<code>fun(0)</code>是在调用<strong>第一层<code>fun</code>函数</strong>。第二个<code>fun(1)</code>是在调用前一个<code>fun</code>的返回值的<code>fun</code>函数，所以：<br>第后面几个<code>fun(1)</code>,<code>fun(2)</code>,<code>fun(3)</code>,函数都是在调用<strong>第二层<code>fun</code>函数</strong>。</p>
+<p>遂：</p>
+<p>在第一次调用<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用<code>fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用<code>fun(2)</code>时<code>m</code>为<code>2</code>，但依然是调用<code>a.fun</code>，所以还是闭包了第一次调用时的n，所以内部调用第一层的<code>fun(2,0);</code>所以<code>o</code>为<code>0</code></p>
+<p>第四次同理；</p>
+<p>即：最终答案为<code>undefined,0,0,0</code></p>
+<p><strong>2、第二行b</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
+<p>先从<code>fun(0)</code>开始看，肯定是调用的第一层<code>fun</code>函数；而他的返回值是一个对象，所以第二个<code>fun(1)</code>调用的是第二层<code>fun</code>函数，后面几个也是调用的第二层<code>fun</code>函数。</p>
+<p>遂：</p>
+<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用 <code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时当前的<code>fun</code>函数不是第一次执行的返回对象，而是<strong>第二次执行的返回对象</strong>。而在第二次执行第一层<code>fun</code>函数时时<code>(1,0)</code>所以<code>n=1</code>,<code>o=0</code>,返回时闭包了第二次的<code>n</code>，遂在第三次调用第三层<code>fun</code>函数时<code>m=2</code>,<code>n=1</code>，即调用第一层<code>fun</code>函数<code>fun(2,1)</code>，所以<code>o</code>为<code>1</code>；</p>
+<p>第四次调用 <code>.fun(3)</code>时<code>m</code>为<code>3</code>，闭包了第三次调用的<code>n</code>，同理，最终调用第一层<code>fun</code>函数为<code>fun(3,2)</code>；所以<code>o</code>为<code>2</code>；</p>
+<p>即最终答案：<code>undefined,0,1,2</code></p>
+<p><strong>3、第三行c</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var c = fun(0).fun(1); c.fun(2); c.fun(3);//undefined,?,?,?</div></pre></td></tr></table></figure>
+<p>根据前面两个例子，可以得知：</p>
+<p><code>fun(0)</code>为执行第一层<code>fun</code>函数，<code>.fun(1)</code>执行的是<code>fun(0)</code>返回的第二层<code>fun</code>函数，这里语句结束，遂<code>c</code>存放的是<code>fun(1)</code>的返回值，而不是<code>fun(0)</code>的返回值，所以<code>c</code>中闭包的也是<code>fun(1)</code>第二次执行的<code>n</code>的值。<code>c.fun(2)</code>执行的是<code>fun(1)</code>返回的第二层<code>fun函数</code>，<code>c.fun(3)</code>执行的<strong>也</strong>是<code>fun(1)</code>返回的第二层<code>fun</code>函数。</p>
+<p>遂：</p>
+<p>在第一次调用第一层<code>fun(0)</code>时，<code>o</code>为<code>undefined</code>；</p>
+<p>第二次调用 <code>.fun(1)</code>时<code>m</code>为<code>1</code>，此时<code>fun</code>闭包了外层函数的<code>n</code>，也就是第一次调用的<code>n=0</code>，即<code>m=1</code>，<code>n=0</code>，并在内部调用第一层<code>fun</code>函数<code>fun(1,0);</code>所以<code>o</code>为<code>0</code>；</p>
+<p>第三次调用<code>.fun(2)</code>时<code>m</code>为<code>2</code>，此时<code>fun</code>闭包的是第二次调用的<code>n=1</code>，即<code>m=2</code>，<code>n=1</code>，并在内部调用第一层<code>fun</code>函数<code>fun(2,1);</code>所以<code>o</code>为<code>1</code>；</p>
+<p>第四次<code>.fun(3)</code>时同理，但依然是调用的第二次的返回值，遂最终调用第一层<code>fun</code>函数<code>fun(3,1)</code>，所以<code>o</code>还为<code>1</code></p>
+<p>即最终答案：<code>undefined,0,1,1</code></p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>这段代码原本是在做一个将异步回调改写为同步调用的组件时的代码，发现了这个坑，对JS的闭包有了更深入的了解。</p>
+<p>关于什么是闭包，网上的文章数不胜数，但理解什么是闭包还是要在代码中自己去发现与领悟。</p>
+<p>如果要我说什么是闭包，我认为，广义上的闭包就是指一个变量在他自身作用域外被使用了，就叫发生了闭包。</p>
+<p>希望读者能通过本文对闭包现象有进一步的了解，如有其它见解或看法，欢迎指正或留言讨论。</p>
+<p><strong> 作者：<a href="http://www.cnblogs.com/xxcanghai/" target="_blank" rel="external">小小沧海</a>  </strong><br><strong> 原文地址：<a href="http://www.cnblogs.com/xxcanghai/p/4991870.html" target="_blank" rel="external">http://www.cnblogs.com/xxcanghai/p/4991870.html</a> </strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
     
   </entry>
   
