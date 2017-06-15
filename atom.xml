@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-06-15T03:12:50.292Z</updated>
+  <updated>2017-06-15T03:39:58.215Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,109 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>HTML5本地存储和本地数据库</title>
+    <link href="http://yoursite.com/2017/05/12/HTML5%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%92%8C%E6%9C%AC%E5%9C%B0%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库/</id>
+    <published>2017-05-12T09:48:49.000Z</published>
+    <updated>2017-06-15T03:39:58.215Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
+<p>下面是Cookie的限制：</p>
+<ul>
+<li>大多数浏览器支持最大为 4096 字节的Cookie。</li>
+<li>浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。</li>
+<li>有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。</li>
+<li>Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。</li>
+</ul>
+<p>为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：</p>
+<ul>
+<li>永久性的本地存储（localStorage）</li>
+<li>会话级别的本地存储（sessionStorage）</li>
+</ul>
+<a id="more"></a>
+<h4 id="二、永久性的本地存储：localStorage"><a href="#二、永久性的本地存储：localStorage" class="headerlink" title="二、永久性的本地存储：localStorage"></a>二、永久性的本地存储：localStorage</h4><p>在最新的JS的API中增加了localStorage对象，以便于用户存储永久存储的Web端的数据。而且数据不会随着Http请求发送到后台服务器，而且存储数据的大小机会不用考虑，因为在HTML5的标准中要求浏览器至少要支持到4MB.所以，这完全是颠覆了Cookie的限制，为Web应用在本地存储复杂的用户痕迹数据提供非常方便的技术支持。接下来就将介绍localStorage的常用的方法。</p>
+<p>localStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  localStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://www.shiyanlou.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = localStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //localStorage.clear();</div><div class="line">  alert(localStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="三、会话级别的本地存储：sessionStorage"><a href="#三、会话级别的本地存储：sessionStorage" class="headerlink" title="三、会话级别的本地存储：sessionStorage"></a>三、会话级别的本地存储：sessionStorage</h4><p>在HTML5中增加了一个Js对象：sessionStorage；通过此对象可以直接操作存储在浏览器中的会话级别的WebStorage。存储在sessionStorage中的数据首先是Key-Value形式的，另外就是它跟浏览器当前会话相关，当会话结束后，数据会自动清除，跟未设置过期时间的Cookie类似。</p>
+<p>sessionStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  sessionStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://blog.itjeek.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = sessionStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //sessionStorage.clear();</div><div class="line">  alert(sessionStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h4 id="四、强大的本地数据"><a href="#四、强大的本地数据" class="headerlink" title="四、强大的本地数据"></a>四、强大的本地数据</h4><p>虽然HTML5已经提供了功能强大的localStorage和sessionStorage，但是他们两个都只能提供存储简单数据结构的数据，对于复杂的Web应用的数据却无能为力。逆天的是HTML5提供了一个浏览器端的数据库支持，允许我们直接通JS的API在浏览器端创建一个本地的数据库，而且支持标准的SQL的CRUD操作，让离线的Web应用更加方便的存储结构化的数据。接下里介绍一下本地数据的相关API和用法。</p>
+</li>
+</ul>
+<p>操作本地数据库的最基本的步骤是：</p>
+<ul>
+<li>第一步：openDatabase方法：创建一个访问数据库的对象。</li>
+<li>第二步：使用第一步创建的数据库访问对象来执行transaction方法，通过此方法可以设置一个开启事务成功的事件响应方法，在事件响应方法中可以执行SQL.</li>
+<li>第三步：通过executeSql方法执行查询，当然查询可以是：CRUD。</li>
+</ul>
+<p>接下来分别介绍一下相关的方法的参数和用法。</p>
+<p>1、 openDatabase方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Demo：获取或者创建一个数据库，如果数据库不存在那么创建之</div><div class="line">var dataBase = openDatabase(<span class="string">"student"</span>, <span class="string">"1.0"</span>, <span class="string">"学生表"</span>, 1024 * 1024, <span class="function"><span class="title">function</span></span> () &#123; &#125;);</div></pre></td></tr></table></figure>
+<p>openDatabase方法打开一个已经存在的数据库，如果数据库不存在，它还可以创建数据库。几个参数意义分别是：</p>
+<ul>
+<li>数据库名称。</li>
+<li>数据库的版本号，目前来说传个1.0就可以了，当然可以不填；</li>
+<li>对数据库的描述。</li>
+<li>设置分配的数据库的大小（单位是kb）。</li>
+<li>回调函数(可省略)。</li>
+</ul>
+<p>初次调用时创建数据库，以后就是建立连接了。</p>
+<p>2.、db.transaction方法</p>
+<p>可以设置一个回调函数，此函数可以接受一个参数就是我们开启的事务的对象。然后通过此对象可以执行SQL脚本。</p>
+<p>3.、executeSql方法执行查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ts.executeSql(sqlQuery,[value1,value2..],dataHandler,errorHandler)</div></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>qlQuery：需要具体执行的sql语句，可以是create、select、update、delete;</li>
+<li>[value1,value2..]：sql语句中所有使用到的参数的数组，在executeSql方法中，将s&gt;语句中所要使用的参数先用“?”代替，然后依次将这些参数组成数组放在第二个参数中;</li>
+<li>dataHandler：执行成功是调用的回调函数，通过该函数可以获得查询结果集;</li>
+<li>errorHandler：执行失败时调用的回调函数;</li>
+</ul>
+<h4 id="综合实例"><a href="#综合实例" class="headerlink" title="综合实例"></a>综合实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line"> &lt;script src=<span class="string">"Scripts/jquery-1.5.1.js"</span> <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">initDatabase</span></span>() &#123;</div><div class="line">            var db = getCurrentDb();//初始化数据库</div><div class="line">            <span class="keyword">if</span>(!db) &#123;alert(<span class="string">"您的浏览器不支持HTML5本地数据库"</span>);<span class="built_in">return</span>;&#125;</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;//启动一个事务，并设置回调函数</div><div class="line">                //执行创建表的Sql脚本</div><div class="line">                trans.executeSql(<span class="string">"create table if not exists Demo(uName text null,title text null,words text null)"</span>, [], <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">                &#125;, <span class="keyword">function</span> (trans, message) &#123;//消息的回调函数alert(message);&#125;);</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, message) &#123;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        $(<span class="function"><span class="title">function</span></span> () &#123;//页面加载完成后绑定页面按钮的点击事件</div><div class="line">            initDatabase();</div><div class="line">            $(<span class="string">"#btnSave"</span>).click(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">                var txtName = $(<span class="string">"#txtName"</span>).val();</div><div class="line">                var txtTitle = $(<span class="string">"#txtTitle"</span>).val();</div><div class="line">                var txtWords = $(<span class="string">"#txtWords"</span>).val();</div><div class="line">                var db = getCurrentDb();</div><div class="line">                //执行sql脚本，插入数据</div><div class="line">                db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                    trans.executeSql(<span class="string">"insert into Demo(uName,title,words) values(?,?,?) "</span>, [txtName, txtTitle, txtWords], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    &#125;, <span class="keyword">function</span> (ts, message) &#123;</div><div class="line">                        alert(message);</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">                showAllTheData();</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">getCurrentDb</span></span>() &#123;</div><div class="line">            //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小</div><div class="line">            //如果数据库不存在那么创建之</div><div class="line">            var db = openDatabase(<span class="string">"myDb"</span>, <span class="string">"1.0"</span>, <span class="string">"it's to save demo data!"</span>, 1024 * 1024); ;</div><div class="line">            <span class="built_in">return</span> db;</div><div class="line">        &#125;</div><div class="line">        //显示所有数据库中的数据到页面上去</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">showAllTheData</span></span>() &#123;</div><div class="line">            $(<span class="string">"#tblData"</span>).empty();</div><div class="line">            var db = getCurrentDb();</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                trans.executeSql(<span class="string">"select * from Demo "</span>, [], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    <span class="keyword">if</span> (data) &#123;</div><div class="line">                        <span class="keyword">for</span> (var i = 0; i &lt; data.rows.length; i++) &#123;</div><div class="line">                            appendDataToTable(data.rows.item(i));//获取某行数据的json对象</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;, <span class="keyword">function</span> (ts, message) &#123;alert(message);var tst = message;&#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">function</span> appendDataToTable(data) &#123;//将数据展示到表格里面</div><div class="line">            //uName,title,words</div><div class="line">            var txtName = data.uName;</div><div class="line">            var txtTitle = data.title;</div><div class="line">            var words = data.words;</div><div class="line">            var strHtml = <span class="string">""</span>;</div><div class="line">            strHtml += <span class="string">"&lt;tr&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span>+txtName+<span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + txtTitle + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + words + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;/tr&gt;"</span>;</div><div class="line">            $(<span class="string">"#tblData"</span>).append(strHtml);</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;table&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;用户名：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtName"</span> id=<span class="string">"txtName"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">               &lt;tr&gt;</div><div class="line">                &lt;td&gt;标题：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtTitle"</span> id=<span class="string">"txtTitle"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;留言：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtWords"</span> id=<span class="string">"txtWords"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"保存"</span> id=<span class="string">"btnSave"</span>/&gt;</div><div class="line">        &lt;hr/&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"展示所哟数据"</span> onclick=<span class="string">"showAllTheData();"</span>/&gt;</div><div class="line">        &lt;table id=<span class="string">"tblData"</span>&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><strong> 作者：<a href="http://www.jianshu.com/u/b7dc6ae92940" target="_blank" rel="external">如山间清爽的风</a> </strong><br><strong> 原文地址：<a href="http://www.jianshu.com/p/f9b5bc2e6b85" target="_blank" rel="external">http://www.jianshu.com/p/f9b5bc2e6b85</a></strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;一、本地存储由来的背景&quot;&gt;&lt;a href=&quot;#一、本地存储由来的背景&quot; class=&quot;headerlink&quot; title=&quot;一、本地存储由来的背景&quot;&gt;&lt;/a&gt;一、本地存储由来的背景&lt;/h4&gt;&lt;p&gt;由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。&lt;/p&gt;
+&lt;p&gt;下面是Cookie的限制：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;大多数浏览器支持最大为 4096 字节的Cookie。&lt;/li&gt;
+&lt;li&gt;浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。&lt;/li&gt;
+&lt;li&gt;有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。&lt;/li&gt;
+&lt;li&gt;Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;永久性的本地存储（localStorage）&lt;/li&gt;
+&lt;li&gt;会话级别的本地存储（sessionStorage）&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="HTML5" scheme="http://yoursite.com/tags/HTML5/"/>
+    
+  </entry>
+  
+  <entry>
     <title>经典JS闭包面试题</title>
-    <link href="http://yoursite.com/2017/06/14/%E7%BB%8F%E5%85%B8JS%E9%97%AD%E5%8C%85%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://yoursite.com/2017/06/14/经典JS闭包面试题/</id>
-    <published>2017-06-14T09:48:49.000Z</published>
-    <updated>2017-06-15T03:12:50.292Z</updated>
+    <link href="http://yoursite.com/2017/04/12/%E7%BB%8F%E5%85%B8JS%E9%97%AD%E5%8C%85%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://yoursite.com/2017/04/12/经典JS闭包面试题/</id>
+    <published>2017-04-12T09:45:49.000Z</published>
+    <updated>2017-06-15T03:37:32.591Z</updated>
     
     <content type="html"><![CDATA[<p>闭包：从字面意思来理解就是封闭和包裹，换句话说，就是在函数内部定义的变量，在函数的外部无法访问到，因此就说函数构成了一个闭包。说白了闭包是作用域的应用。计算机科学中对闭包的定义为：一个函数的函数体以及函数所处的环境，构成的一个综合体叫做：闭包函数体：就是函数内部的代码。函数所处的环境：指的就是作用域。是不是觉得计算机科学中对闭包的定义是不是很难理解。下面我就来我面试时遇到的一些闭包问题。</p>
 <a id="more"></a>
@@ -145,10 +243,10 @@
   
   <entry>
     <title>强大的CSS3选择器</title>
-    <link href="http://yoursite.com/2017/06/14/%E5%BC%BA%E5%A4%A7%E7%9A%84CSS3%E9%80%89%E6%8B%A9%E5%99%A8/"/>
-    <id>http://yoursite.com/2017/06/14/强大的CSS3选择器/</id>
-    <published>2017-06-14T09:48:49.000Z</published>
-    <updated>2017-06-15T03:05:26.904Z</updated>
+    <link href="http://yoursite.com/2017/03/12/%E5%BC%BA%E5%A4%A7%E7%9A%84CSS3%E9%80%89%E6%8B%A9%E5%99%A8/"/>
+    <id>http://yoursite.com/2017/03/12/强大的CSS3选择器/</id>
+    <published>2017-03-12T09:47:49.000Z</published>
+    <updated>2017-06-15T03:37:46.088Z</updated>
     
     <content type="html"><![CDATA[<p>每个前端工程师可能每天都会写一些css，其中选择器是很主要的一部分。但是，大家可能每天写的大多是#id,.class这样的选择器，这并不稀奇，但是如果我们了解并且熟用css3为我们提供的强大并且优雅的选择器，就可以简化我们的代码。<br>我在学习和整理css3的选择器的时候都不会去考虑它的浏览器的支持程度，如果有需要，可以在这里查看它的浏览器支持情况：「caniuse.com」。</p>
 <a id="more"></a>

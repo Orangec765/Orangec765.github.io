@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>HTML5本地存储和本地数据库 | 夏至未至</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、本地存储由来的背景由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。 下面是Cookie的限制：  大多数浏览器支持最大为 4096 字节的Cookie。 浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大">
+<meta name="keywords" content="HTML5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML5本地存储和本地数据库">
+<meta property="og:url" content="http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库/index.html">
+<meta property="og:site_name" content="夏至未至">
+<meta property="og:description" content="一、本地存储由来的背景由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。 下面是Cookie的限制：  大多数浏览器支持最大为 4096 字节的Cookie。 浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大">
+<meta property="og:updated_time" content="2017-06-15T03:39:58.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML5本地存储和本地数据库">
+<meta name="twitter:description" content="一、本地存储由来的背景由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。 下面是Cookie的限制：  大多数浏览器支持最大为 4096 字节的Cookie。 浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大">
+  
+    <link rel="alternative" href="/atom.xml" title="夏至未至" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/header.jpg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CC</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder=" Search...">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/开发工具/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/CSS3/" style="font-size: 10px;">CSS3</a> <a href="/tags/HTML5/" style="font-size: 10px;">HTML5</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CC</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/header.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CC</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">一入编程深似海，从此妹子是路人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/开发工具/">玩转开发工具</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Orangec765" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://www.weibo.com/5446389939" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-HTML5本地存储和本地数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2017/05/12/HTML5本地存储和本地数据库/" class="article-date">
+      <time datetime="2017-05-12T09:48:49.000Z" itemprop="datePublished">2017-05-12</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTML5本地存储和本地数据库
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML5/">HTML5</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="一、本地存储由来的背景"><a href="#一、本地存储由来的背景" class="headerlink" title="一、本地存储由来的背景"></a>一、本地存储由来的背景</h4><p>由于HTML4时代Cookie的大小、格式、存储数据格式等限制，网站应用如果想在浏览器端存储用户的部分信息，那么只能借助于Cookie。但是Cookie的这些限制，也就导致了Cookie只能存储一些ID之类的标识符等简单的数据。</p>
+<p>下面是Cookie的限制：</p>
+<ul>
+<li>大多数浏览器支持最大为 4096 字节的Cookie。</li>
+<li>浏览器还限制站点可以在用户计算机上存储的Cookie的数量。大多数浏览器只允许每个站点存储 20 个Cookie；如果试图存储更多Cookie，则最旧的Cookie便会被丢弃。</li>
+<li>有些浏览器还会对它们将接受的来自所有站点的Cookie总数作出绝对限制，通常为 300 个。</li>
+<li>Cookie默认情况都会随着Http请求发送到后台服务器，但并不是所有请求都需要Cookie的，比如：js、css、图片等请求则不需要Cookie。</li>
+</ul>
+<p>为了破解Cookie的一系列限制，HTML5通过JS的新的API就能直接存储大量的数据到客户端浏览器，而且支持复杂的本地数据库，让JS更有效率。 HTML5支持两种的WebStorage：</p>
+<ul>
+<li>永久性的本地存储（localStorage）</li>
+<li>会话级别的本地存储（sessionStorage）</li>
+</ul>
+<a id="more"></a>
+<h4 id="二、永久性的本地存储：localStorage"><a href="#二、永久性的本地存储：localStorage" class="headerlink" title="二、永久性的本地存储：localStorage"></a>二、永久性的本地存储：localStorage</h4><p>在最新的JS的API中增加了localStorage对象，以便于用户存储永久存储的Web端的数据。而且数据不会随着Http请求发送到后台服务器，而且存储数据的大小机会不用考虑，因为在HTML5的标准中要求浏览器至少要支持到4MB.所以，这完全是颠覆了Cookie的限制，为Web应用在本地存储复杂的用户痕迹数据提供非常方便的技术支持。接下来就将介绍localStorage的常用的方法。</p>
+<p>localStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  localStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://www.shiyanlou.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = localStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //localStorage.clear();</div><div class="line">  alert(localStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="三、会话级别的本地存储：sessionStorage"><a href="#三、会话级别的本地存储：sessionStorage" class="headerlink" title="三、会话级别的本地存储：sessionStorage"></a>三、会话级别的本地存储：sessionStorage</h4><p>在HTML5中增加了一个Js对象：sessionStorage；通过此对象可以直接操作存储在浏览器中的会话级别的WebStorage。存储在sessionStorage中的数据首先是Key-Value形式的，另外就是它跟浏览器当前会话相关，当会话结束后，数据会自动清除，跟未设置过期时间的Cookie类似。</p>
+<p>sessionStorage提供了四个方法来辅助我们进行对本地存储做相关操作。</p>
+<ul>
+<li>setItem(key,value)添加本地存储数据。两个参数，非常简单就不说了。</li>
+<li>getItem(key)通过key获取相应的Value。</li>
+<li>removeItem(key)通过key删除本地数据。</li>
+<li><p>clear()清空数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  //添加key-value 数据到 sessionStorage</div><div class="line">  sessionStorage.setItem(<span class="string">"demokey"</span>, <span class="string">"http://blog.itjeek.com"</span>);</div><div class="line">  //通过key来获取value</div><div class="line">  var dt = sessionStorage.getItem(<span class="string">"demokey"</span>);</div><div class="line">  alert(dt);</div><div class="line">  //清空所有的key-value数据。</div><div class="line">  //sessionStorage.clear();</div><div class="line">  alert(sessionStorage.length);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h4 id="四、强大的本地数据"><a href="#四、强大的本地数据" class="headerlink" title="四、强大的本地数据"></a>四、强大的本地数据</h4><p>虽然HTML5已经提供了功能强大的localStorage和sessionStorage，但是他们两个都只能提供存储简单数据结构的数据，对于复杂的Web应用的数据却无能为力。逆天的是HTML5提供了一个浏览器端的数据库支持，允许我们直接通JS的API在浏览器端创建一个本地的数据库，而且支持标准的SQL的CRUD操作，让离线的Web应用更加方便的存储结构化的数据。接下里介绍一下本地数据的相关API和用法。</p>
+</li>
+</ul>
+<p>操作本地数据库的最基本的步骤是：</p>
+<ul>
+<li>第一步：openDatabase方法：创建一个访问数据库的对象。</li>
+<li>第二步：使用第一步创建的数据库访问对象来执行transaction方法，通过此方法可以设置一个开启事务成功的事件响应方法，在事件响应方法中可以执行SQL.</li>
+<li>第三步：通过executeSql方法执行查询，当然查询可以是：CRUD。</li>
+</ul>
+<p>接下来分别介绍一下相关的方法的参数和用法。</p>
+<p>1、 openDatabase方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Demo：获取或者创建一个数据库，如果数据库不存在那么创建之</div><div class="line">var dataBase = openDatabase(<span class="string">"student"</span>, <span class="string">"1.0"</span>, <span class="string">"学生表"</span>, 1024 * 1024, <span class="function"><span class="title">function</span></span> () &#123; &#125;);</div></pre></td></tr></table></figure>
+<p>openDatabase方法打开一个已经存在的数据库，如果数据库不存在，它还可以创建数据库。几个参数意义分别是：</p>
+<ul>
+<li>数据库名称。</li>
+<li>数据库的版本号，目前来说传个1.0就可以了，当然可以不填；</li>
+<li>对数据库的描述。</li>
+<li>设置分配的数据库的大小（单位是kb）。</li>
+<li>回调函数(可省略)。</li>
+</ul>
+<p>初次调用时创建数据库，以后就是建立连接了。</p>
+<p>2.、db.transaction方法</p>
+<p>可以设置一个回调函数，此函数可以接受一个参数就是我们开启的事务的对象。然后通过此对象可以执行SQL脚本。</p>
+<p>3.、executeSql方法执行查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ts.executeSql(sqlQuery,[value1,value2..],dataHandler,errorHandler)</div></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>qlQuery：需要具体执行的sql语句，可以是create、select、update、delete;</li>
+<li>[value1,value2..]：sql语句中所有使用到的参数的数组，在executeSql方法中，将s&gt;语句中所要使用的参数先用“?”代替，然后依次将这些参数组成数组放在第二个参数中;</li>
+<li>dataHandler：执行成功是调用的回调函数，通过该函数可以获得查询结果集;</li>
+<li>errorHandler：执行失败时调用的回调函数;</li>
+</ul>
+<h4 id="综合实例"><a href="#综合实例" class="headerlink" title="综合实例"></a>综合实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line"> &lt;script src=<span class="string">"Scripts/jquery-1.5.1.js"</span> <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;&lt;/script&gt;</div><div class="line">    &lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">initDatabase</span></span>() &#123;</div><div class="line">            var db = getCurrentDb();//初始化数据库</div><div class="line">            <span class="keyword">if</span>(!db) &#123;alert(<span class="string">"您的浏览器不支持HTML5本地数据库"</span>);<span class="built_in">return</span>;&#125;</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;//启动一个事务，并设置回调函数</div><div class="line">                //执行创建表的Sql脚本</div><div class="line">                trans.executeSql(<span class="string">"create table if not exists Demo(uName text null,title text null,words text null)"</span>, [], <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">                &#125;, <span class="keyword">function</span> (trans, message) &#123;//消息的回调函数alert(message);&#125;);</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, result) &#123;</div><div class="line">            &#125;, <span class="keyword">function</span> (trans, message) &#123;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        $(<span class="function"><span class="title">function</span></span> () &#123;//页面加载完成后绑定页面按钮的点击事件</div><div class="line">            initDatabase();</div><div class="line">            $(<span class="string">"#btnSave"</span>).click(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">                var txtName = $(<span class="string">"#txtName"</span>).val();</div><div class="line">                var txtTitle = $(<span class="string">"#txtTitle"</span>).val();</div><div class="line">                var txtWords = $(<span class="string">"#txtWords"</span>).val();</div><div class="line">                var db = getCurrentDb();</div><div class="line">                //执行sql脚本，插入数据</div><div class="line">                db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                    trans.executeSql(<span class="string">"insert into Demo(uName,title,words) values(?,?,?) "</span>, [txtName, txtTitle, txtWords], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    &#125;, <span class="keyword">function</span> (ts, message) &#123;</div><div class="line">                        alert(message);</div><div class="line">                    &#125;);</div><div class="line">                &#125;);</div><div class="line">                showAllTheData();</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">getCurrentDb</span></span>() &#123;</div><div class="line">            //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小</div><div class="line">            //如果数据库不存在那么创建之</div><div class="line">            var db = openDatabase(<span class="string">"myDb"</span>, <span class="string">"1.0"</span>, <span class="string">"it's to save demo data!"</span>, 1024 * 1024); ;</div><div class="line">            <span class="built_in">return</span> db;</div><div class="line">        &#125;</div><div class="line">        //显示所有数据库中的数据到页面上去</div><div class="line">        <span class="keyword">function</span> <span class="function"><span class="title">showAllTheData</span></span>() &#123;</div><div class="line">            $(<span class="string">"#tblData"</span>).empty();</div><div class="line">            var db = getCurrentDb();</div><div class="line">            db.transaction(<span class="keyword">function</span> (trans) &#123;</div><div class="line">                trans.executeSql(<span class="string">"select * from Demo "</span>, [], <span class="keyword">function</span> (ts, data) &#123;</div><div class="line">                    <span class="keyword">if</span> (data) &#123;</div><div class="line">                        <span class="keyword">for</span> (var i = 0; i &lt; data.rows.length; i++) &#123;</div><div class="line">                            appendDataToTable(data.rows.item(i));//获取某行数据的json对象</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;, <span class="keyword">function</span> (ts, message) &#123;alert(message);var tst = message;&#125;);</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">function</span> appendDataToTable(data) &#123;//将数据展示到表格里面</div><div class="line">            //uName,title,words</div><div class="line">            var txtName = data.uName;</div><div class="line">            var txtTitle = data.title;</div><div class="line">            var words = data.words;</div><div class="line">            var strHtml = <span class="string">""</span>;</div><div class="line">            strHtml += <span class="string">"&lt;tr&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span>+txtName+<span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + txtTitle + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;td&gt;"</span> + words + <span class="string">"&lt;/td&gt;"</span>;</div><div class="line">            strHtml += <span class="string">"&lt;/tr&gt;"</span>;</div><div class="line">            $(<span class="string">"#tblData"</span>).append(strHtml);</div><div class="line">        &#125;</div><div class="line">    &lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;table&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;用户名：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtName"</span> id=<span class="string">"txtName"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">               &lt;tr&gt;</div><div class="line">                &lt;td&gt;标题：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtTitle"</span> id=<span class="string">"txtTitle"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">            &lt;tr&gt;</div><div class="line">                &lt;td&gt;留言：&lt;/td&gt;</div><div class="line">                &lt;td&gt;&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> name=<span class="string">"txtWords"</span> id=<span class="string">"txtWords"</span> required/&gt;&lt;/td&gt;</div><div class="line">            &lt;/tr&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"保存"</span> id=<span class="string">"btnSave"</span>/&gt;</div><div class="line">        &lt;hr/&gt;</div><div class="line">        &lt;input <span class="built_in">type</span>=<span class="string">"button"</span> value=<span class="string">"展示所哟数据"</span> onclick=<span class="string">"showAllTheData();"</span>/&gt;</div><div class="line">        &lt;table id=<span class="string">"tblData"</span>&gt;</div><div class="line">        &lt;/table&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p><strong> 作者：<a href="http://www.jianshu.com/u/b7dc6ae92940" target="_blank" rel="external">如山间清爽的风</a> </strong><br><strong> 原文地址：<a href="http://www.jianshu.com/p/f9b5bc2e6b85" target="_blank" rel="external">http://www.jianshu.com/p/f9b5bc2e6b85</a></strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2017/05/12/HTML5本地存储和本地数据库/">HTML5本地存储和本地数据库</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 CC 的个人博客">CC</a></p>
+        <p><span>发布时间:</span>2017年05月12日 - 17时48分</p>
+        <p><span>最后更新:</span>2017年06月15日 - 11时39分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/12/HTML5本地存储和本地数据库/" title="HTML5本地存储和本地数据库">http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/05/12/HTML5本地存储和本地数据库/　　作者: CC" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a  href="/2017/04/12/经典JS闭包面试题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">经典JS闭包面试题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、本地存储由来的背景"><span class="toc-number">1.</span> <span class="toc-text">一、本地存储由来的背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、永久性的本地存储：localStorage"><span class="toc-number">2.</span> <span class="toc-text">二、永久性的本地存储：localStorage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、会话级别的本地存储：sessionStorage"><span class="toc-number">3.</span> <span class="toc-text">三、会话级别的本地存储：sessionStorage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、强大的本地数据"><span class="toc-number">4.</span> <span class="toc-text">四、强大的本地数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#综合实例"><span class="toc-number">5.</span> <span class="toc-text">综合实例</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2017/04/12/经典JS闭包面试题/" title="下一篇: 经典JS闭包面试题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/12/HTML5本地存储和本地数据库/">HTML5本地存储和本地数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/12/经典JS闭包面试题/">经典JS闭包面试题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/12/强大的CSS3选择器/">强大的CSS3选择器</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 CC
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
