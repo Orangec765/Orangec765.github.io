@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104114221752-1894187307.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104120244799-2006728410.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104121102221-395461091.png">
-<meta property="og:updated_time" content="2017-07-04T09:15:37.505Z">
+<meta property="og:updated_time" content="2017-07-04T09:26:09.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue.js开发坏境搭建">
 <meta name="twitter:description" content="Vue.js（读音 /vjuː/, 类似于 view） 是一套构建用户界面的 渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，并且非常容易学习，非常容易与其它库或已有项目整合。另一方面，Vue 完全有能力驱动采用单文件组件和 Vue 生态系统支持的库开发的复杂单页应用。 Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合">
@@ -313,31 +313,26 @@
         <p>Vue.js（读音 /vjuː/, 类似于 view） 是一套构建用户界面的 渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，并且非常容易学习，非常容易与其它库或已有项目整合。另一方面，Vue 完全有能力驱动采用单文件组件和 Vue 生态系统支持的库开发的复杂单页应用。</p>
 <p>Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。</p>
 <a id="more"></a>
-<h1 id="vue-js开发环境搭建"><a href="#vue-js开发环境搭建" class="headerlink" title="vue.js开发环境搭建"></a>vue.js开发环境搭建</h1><p>1.安装<a href="http://lib.csdn.net/base/nodejs" title="Node.js知识库" target="_blank" rel="external">Node.js</a>(<a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">http://www.runoob.com/nodejs/nodejs-install-setup.html</a>)</p>
-<p>2.基于<a href="http://lib.csdn.net/base/nodejs" title="Node.js知识库" target="_blank" rel="external">node.js</a>,利用淘宝npm镜像安装相关依赖</p>
-<p> 在cmd里直接输入：npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org/" target="_blank" rel="external">https://registry.npm.taobao.org</a>，回车，等待安装…</p>
-<p>3.安装全局vue-cli脚手架,用于帮助搭建所需的模板框架</p>
-<p>在cmd里 1)输入：cnpm install -g vue-cli，回车，等待安装…</p>
+<h1 id="vue-js开发环境搭建"><a href="#vue-js开发环境搭建" class="headerlink" title="vue.js开发环境搭建"></a>vue.js开发环境搭建</h1><h3 id="1-安装Node-js-http-www-runoob-com-nodejs-nodejs-install-setup-html"><a href="#1-安装Node-js-http-www-runoob-com-nodejs-nodejs-install-setup-html" class="headerlink" title="1.安装Node.js(http://www.runoob.com/nodejs/nodejs-install-setup.html)"></a>1.安装<a href="http://lib.csdn.net/base/nodejs" title="Node.js知识库" target="_blank" rel="external">Node.js</a>(<a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">http://www.runoob.com/nodejs/nodejs-install-setup.html</a>)</h3><h3 id="2-基于node-js-利用淘宝npm镜像安装相关依赖"><a href="#2-基于node-js-利用淘宝npm镜像安装相关依赖" class="headerlink" title="2.基于node.js,利用淘宝npm镜像安装相关依赖"></a>2.基于<a href="http://lib.csdn.net/base/nodejs" title="Node.js知识库" target="_blank" rel="external">node.js</a>,利用淘宝npm镜像安装相关依赖</h3><p> 在cmd里直接输入：npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org/" target="_blank" rel="external">https://registry.npm.taobao.org</a>，回车，等待安装…</p>
+<h3 id="3-安装全局vue-cli脚手架-用于帮助搭建所需的模板框架"><a href="#3-安装全局vue-cli脚手架-用于帮助搭建所需的模板框架" class="headerlink" title="3.安装全局vue-cli脚手架,用于帮助搭建所需的模板框架"></a>3.安装全局vue-cli脚手架,用于帮助搭建所需的模板框架</h3><p>在cmd里 1)输入：cnpm install -g vue-cli，回车，等待安装…</p>
 <pre><code>2).输入：vue，回车，若出现vue信息说明表示成功
-</code></pre><p>4.创建项目</p>
-<p>在cmd里输入：vue init webpack vue_test(项目文件夹名)，回车，等待一小会儿，依次出现‘<a href="http://lib.csdn.net/base/git" title="Git知识库" target="_blank" rel="external">Git</a>’下的项，可按下图操作</p>
+</code></pre><h3 id="4-创建项目"><a href="#4-创建项目" class="headerlink" title="4.创建项目"></a>4.创建项目</h3><p>在cmd里输入：vue init webpack vue_test(项目文件夹名)，回车，等待一小会儿，依次出现‘<a href="http://lib.csdn.net/base/git" title="Git知识库" target="_blank" rel="external">Git</a>’下的项，可按下图操作</p>
 <p><img src="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104114221752-1894187307.png" alt=""></p>
-<p>5.安装依赖</p>
-<p>在cmd里  1).输入：cd vue_test（项目名），回车，进入到具体项目文件夹</p>
+<h3 id="5-安装依赖"><a href="#5-安装依赖" class="headerlink" title="5.安装依赖"></a>5.安装依赖</h3><p>在cmd里  1).输入：cd vue_test（项目名），回车，进入到具体项目文件夹</p>
 <pre><code>2).输入：cnpm install，回车，等待一小会儿
 </code></pre><p>回到项目文件夹，会发现项目结构里，多了一个node_modules文件夹（该文件里的内容就是之前安装的依赖）</p>
 <p>基于脚手架创建的默认项目结构如下图所示：</p>
 <p><img src="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104120244799-2006728410.png" alt=""></p>
-<p>6.<a href="http://lib.csdn.net/base/softwaretest" title="软件测试知识库" target="_blank" rel="external">测试</a>环境是否搭建成功</p>
-<p>方法1：在cmd里输入：cnpm run dev</p>
-<p>方法2：在浏览里输入：localhost:8080(默认端口为8080)</p>
+<h3 id="6-测试环境是否搭建成功"><a href="#6-测试环境是否搭建成功" class="headerlink" title="6.测试环境是否搭建成功"></a>6.<a href="http://lib.csdn.net/base/softwaretest" title="软件测试知识库" target="_blank" rel="external">测试</a>环境是否搭建成功</h3><p><strong>方法1：在cmd里输入：cnpm run dev</strong></p>
+<p><strong>方法2：在浏览里输入：localhost:8080(默认端口为8080) </strong></p>
 <p>运行起来后的效果如下图所示：</p>
 <p><img src="http://images2015.cnblogs.com/blog/1000531/201611/1000531-20161104121102221-395461091.png" alt=""></p>
 <p>参照原文：<a href="http://blog.csdn[.NET](http://lib.csdn.net/base/dotnet" target="_blank" rel="external">http://blog.csdn[.NET](http://lib.csdn.net/base/dotnet</a> “.NET知识库”)/luckylqh/article/details/52863026</p>
-<p>注：安装过程中的坑<br>执行cnpm run dev时候报以下错误</p>
-<p>To use this template, you must update following to modules:    npm: 2.15.1 should be &gt;= 3.0.0  </p>
-<p>解：cmd 中执行 </p>
+<h4 id="注：安装过程中的坑"><a href="#注：安装过程中的坑" class="headerlink" title="注：安装过程中的坑"></a>注：安装过程中的坑</h4><p><strong>执行cnpm run dev时候报以下错误</strong></p>
+<blockquote>
+<p>To use this template, you must update following to modules:    npm: 2.15.1 should be &gt;= 3.0.0<br>解：cmd 中执行 </p>
 <p>把npm升级一下就可以了，npm install npm@latest -g 这句命令行就是升级到最新版的</p>
+</blockquote>
 <p><strong> 原文地址：<a href="http://blog.csdn.NET/luckylqh/article/details/52863026" target="_blank" rel="external">http://blog.csdn.NET/luckylqh/article/details/52863026</a> </strong></p>
 
       
@@ -350,7 +345,7 @@
         <p><span>本文标题:</span><a  href="/2017/07/04/vue-js开发坏境搭建/">vue.js开发坏境搭建</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 CC 的个人博客">CC</a></p>
         <p><span>发布时间:</span>2017年07月04日 - 16时51分</p>
-        <p><span>最后更新:</span>2017年07月04日 - 17时15分</p>
+        <p><span>最后更新:</span>2017年07月04日 - 17时26分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/07/04/vue-js开发坏境搭建/" title="vue.js开发坏境搭建">http://yoursite.com/2017/07/04/vue-js开发坏境搭建/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2017/07/04/vue-js开发坏境搭建/　　作者: CC" title=""></span>
@@ -378,7 +373,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-js开发环境搭建"><span class="toc-number">1.</span> <span class="toc-text">vue.js开发环境搭建</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-js开发环境搭建"><span class="toc-number">1.</span> <span class="toc-text">vue.js开发环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装Node-js-http-www-runoob-com-nodejs-nodejs-install-setup-html"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.安装Node.js(http://www.runoob.com/nodejs/nodejs-install-setup.html)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-基于node-js-利用淘宝npm镜像安装相关依赖"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.基于node.js,利用淘宝npm镜像安装相关依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-安装全局vue-cli脚手架-用于帮助搭建所需的模板框架"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.安装全局vue-cli脚手架,用于帮助搭建所需的模板框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-创建项目"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-安装依赖"><span class="toc-number">1.0.5.</span> <span class="toc-text">5.安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-测试环境是否搭建成功"><span class="toc-number">1.0.6.</span> <span class="toc-text">6.测试环境是否搭建成功</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注：安装过程中的坑"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">注：安装过程中的坑</span></a></li></ol></li></ol></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
